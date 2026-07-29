@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nosotros - Electro Cover</title>
+  <link rel="stylesheet" href="../css/nosotros.css" />
+  
+  <!-- Fuente Orbitron -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+  
+  <!-- Librerías -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+  <!-- Canvas para partículas 3D -->
+  <canvas id="background-canvas"></canvas>
+
+  <!-- Botón para regresar a módulos -->
+  <button id="btn-regresar-modulos" class="btn-regresar">← Regresar a Módulos</button>
+
+  <!-- Contenido principal -->
+  <main class="contenedor-principal">
+    <header class="header-nosotros">
+      <h1 class="titulo-principal">ELECTRO COVER</h1>
+      <p class="subtitulo">Conoce al equipo detrás de la música</p>
+      <div class="linea-divisoria"></div>
+    </header>
+
+    <section class="seccion-integrantes">
+      <div class="contenedor-integrantes" id="contenedor-integrantes">
+        <!-- Las tarjetas se insertarán dinámicamente aquí -->
+      </div>
+    </section>
+  </main>
+
+  <script src="../js/nosotros.js"></script>
+</body>
+</html>

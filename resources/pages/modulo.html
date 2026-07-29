@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Von Neumann</title>
+    
+    <!-- Librerías -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="../css/modulo.css">
+
+    <!-- Fuente futurista -->
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+
+    <!-- ESTILO PARA INDICADOR DE MÚSICA -->
+    <style>
+        .music-status {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            color: #00f0ff;
+            font-size: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 6px 12px;
+            border-radius: 20px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-family: 'Audiowide', cursive;
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+        }
+        
+        .music-status.paused {
+            color: #ff5555;
+            border-color: rgba(255, 85, 85, 0.3);
+            box-shadow: 0 0 15px rgba(255, 85, 85, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    
+    <!-- SONIDOS DE MÓDULOS -->
+    <audio id="snd-hover" src="../assets/sounds/Click.mp3"></audio>
+    <audio id="snd-enter" src="../assets/sounds/Gamemode Select.mp3"></audio>
+    
+    <!-- MÚSICA DE FONDO PARA MÓDULOS (OCULTA) -->
+    <audio id="modulo-bg-music" loop>
+        <!-- CAMBIA ESTA RUTA A TU CANCIÓN PARA MÓDULOS -->
+        <source src="../assets/sounds/ElectroCover - Tratame Suavemente - Soda Stereo Waldo Dance Remix.mpeg" type="audio/mpeg">
+        <source src="../assets/sounds/ElectroCover - Tratame Suavemente - Soda Stereo Waldo Dance Remix.mpeg" type="audio/ogg">
+    </audio>
+
+    <!-- 🔷 Encabezado futurista de Electro Cover -->
+    <header id="header-electro">
+        <h1 class="logo-title">Von Nuemann</h1>
+        <p class="instructions">Pasa el cursor sobre los módulos y haz doble clic para explorarlos</p>
+    </header>
+    
+    <div id="hud-info" class="hidden">
+        <h3 id="hud-title">Título</h3>
+        <p id="hud-desc">Descripción del módulo</p>
+        <img id="hud-img" src="" alt="Imagen del módulo">
+    </div>
+    
+    <div id="content-overlay" class="hidden">
+        <div id="content-area">
+            <!-- Aquí se insertará el contenido dinámicamente -->
+        </div>
+    </div>
+    
+    <button id="btn-regresar-menu">Regresar al Menú</button>
+    
+    <!-- INDICADOR DE MÚSICA (SOLO TEXTO) -->
+    <div class="music-status" id="musicStatus">🎵 Música activa</div>
+
+    <!-- Script principal -->
+    <script src="../js/modulos.js"></script>
+
+    <!-- SISTEMA DE MÚSICA INTELIGENTE CON ATENUACIÓN -->
+<script>
+    // ==================== SISTEMA DE MÚSICA POR ESTADOS ====================
+    const moduloMusic = document.getElementById('modulo-bg-music');
+    const musicStatus = document.getElementById('musicStatus');
+    
+    // CONFIGURACIÓN
+    //const VOLUMEN_NORMAL = 0.5;     // Volumen normal (50%)
+    //const VOLUMEN_MODULO = 0.02;    // Dentro de un módulo (15%)
+    //const VOLUMEN_VIDEO = 0.05;     // Video reproduciéndose (5%)
+    
+    let estadoActual = 'normal'; // 'normal', 'modulo', 'video'
+    let estadoAnterior = 'normal';
+    
+    // Mostrar estado de música
+    function mostrarEstadoMusica(texto, esVideo = false) {
+        musicStatus.textContent = texto;
+        musicStatus.style.opacity = '1';
+        
+        if (esVideo) {
+            musicStatus.classList.add('paused');
+        } else {
+            musicStatus.classList.remove('paused');
+        }
+        
+        clearTimeout(musicStatus.timeout);
+        musicStatus.timeout = setTimeout(() => {
+            musicStatus.style.opacity = '0';
+        }, 2000);
+    }
+    
+    // Cambiar volumen según estado
+    function cambiarEstadoMusica(nuevoEstado) {
+        if (estadoActual === nuevoEstado) return;
+        
+        estadoAnterior = estadoActual;
+        estadoActual = nuevoEstado;
+        
+        let nuevoVolumen;
+        let mensaje;
+        let esVideo = false;
+        
+        switch(nuevoEstado) {
+            case 'normal':
+                nuevoVolumen = VOLUMEN_NORMAL;
+                mensaje = '🎵 Música normal';
+                break;
+            case 'modulo':
+                nuevoVolumen = VOLUMEN_MODULO;
+                mensaje = '📂 En módulo';
+                break;
+            case 'video':
+                nuevoVolumen = VOLUMEN_VIDEO;
+                mensaje = '🎬 Video activo';
+                esVideo = true;
+                break;
+        }
+        
+        cambiarVolumenSuave(nuevoVolumen, 400);
+        mostrarEstadoMusica(mensaje, esVideo);
+    }
+    
+    // Cambiar volumen suavemente
+    function cambiarVolumenSuave(nuevoVolumen, duracion = 400) {
+        if (!moduloMusic) return;
+        
+        const volumenInicial = moduloMusic.volume;
+        const diferencia = nuevoVolumen - volumenInicial;
+        const pasos = 20;
+        const pasoVolumen = diferencia / pasos;
+        const intervalo = duracion / pasos;
+        let pasoActual = 0;
+        
+        clearInterval(moduloMusic.fadeInterval);
+        
+        moduloMusic.fadeInterval = setInterval(() => {
+            pasoActual++;
+            moduloMusic.volume = volumenInicial + (pasoVolumen * pasoActual);
+            
+            if (pasoActual >= pasos) {
+                moduloMusic.volume = nuevoVolumen;
+                clearInterval(moduloMusic.fadeInterval);
+            }
+        }, intervalo);
+    }
+    
+    // INICIAR MÚSICA AL CARGAR
+    window.addEventListener('DOMContentLoaded', () => {
+        // Configurar música
+        moduloMusic.volume = 0;
+        moduloMusic.loop = true;
+        
+        // Pausar música principal
+        try {
+            if (window.opener && window.opener.pausarMusicaFondo) {
+                window.opener.pausarMusicaFondo();
+            }
+        } catch (e) {}
+        
+        // Iniciar música de módulos
+        setTimeout(() => {
+            moduloMusic.play()
+                .then(() => {
+                    cambiarVolumenSuave(VOLUMEN_NORMAL, 1200);
+                    mostrarEstadoMusica('🎵 Música activa');
+                    configurarSistemaEstados();
+                })
+                .catch(error => {
+                    mostrarEstadoMusica('👆 Toca para activar', true);
+                    
+                    document.addEventListener('click', function activarMusica() {
+                        moduloMusic.play()
+                            .then(() => {
+                                cambiarVolumenSuave(VOLUMEN_NORMAL, 800);
+                                mostrarEstadoMusica('🎵 Música activada');
+                                configurarSistemaEstados();
+                            });
+                        
+                        document.removeEventListener('click', activarMusica);
+                    }, { once: true });
+                });
+        }, 800);
+        
+        // Animaciones de entrada
+        gsap.from("#header-electro", {
+            y: -80, opacity: 0, duration: 1.5, ease: "power2.out"
+        });
+
+        gsap.to(".logo-title", {
+            textShadow: "0 0 25px #00faff, 0 0 45px #00faff",
+            repeat: -1, yoyo: true, duration: 2
+        });
+
+        gsap.from(".instructions", {
+            opacity: 0, delay: 1, duration: 1.5
+        });
+    });
+    
+    // CONFIGURAR SISTEMA DE ESTADOS
+    function configurarSistemaEstados() {
+        // Sistema para que modulos.js pueda cambiar estados
+        window.musicStateManager = {
+            // Entrar a un módulo (clic)
+            entrarModulo: function() {
+                cambiarEstadoMusica('modulo');
+            },
+            
+            // Salir de un módulo (cerrar overlay)
+            salirModulo: function() {
+                cambiarEstadoMusica('normal');
+            },
+            
+            // Video empieza
+            empezarVideo: function() {
+                cambiarEstadoMusica('video');
+            },
+            
+            // Video termina
+            terminarVideo: function() {
+                cambiarEstadoMusica('modulo'); // Volver a estado módulo, no a normal
+            },
+            
+            // Obtener estado actual
+            getEstado: function() {
+                return estadoActual;
+            }
+        };
+        
+        console.log('🎮 Gestor de estados de música listo');
+        
+        // Configurar detección de cierre de overlay
+        configurarDeteccionCierreOverlay();
+    }
+    
+    // DETECTAR CUANDO SE CIERRA EL OVERLAY
+    function configurarDeteccionCierreOverlay() {
+        const overlay = document.getElementById('content-overlay');
+        
+        // Observar cambios en la clase 'hidden' del overlay
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.attributeName === 'class') {
+                    const tieneHidden = overlay.classList.contains('hidden');
+                    
+                    if (tieneHidden && estadoActual === 'modulo') {
+                        // Overlay se cerró, salir del estado módulo
+                        setTimeout(() => {
+                            window.musicStateManager.salirModulo();
+                        }, 300);
+                    }
+                }
+            });
+        });
+        
+        observer.observe(overlay, { attributes: true });
+        
+        // También detectar clic en botón cerrar
+        document.addEventListener('click', (e) => {
+            if (e.target.id === 'close-btn' && estadoActual === 'modulo') {
+                setTimeout(() => {
+                    window.musicStateManager.salirModulo();
+                }, 300);
+            }
+        });
+    }
+    
+    // DETECTAR VIDEOS EN OVERLAY
+    function configurarDeteccionVideos() {
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.addedNodes.length) {
+                    mutation.addedNodes.forEach(node => {
+                        const video = node.tagName === 'VIDEO' ? node : 
+                                     (node.querySelector ? node.querySelector('video') : null);
+                        
+                        if (video) {
+                            console.log('🎬 Video detectado en overlay');
+                            
+                            // Cuando video empieza
+                            video.addEventListener('play', () => {
+                                if (window.musicStateManager) {
+                                    window.musicStateManager.empezarVideo();
+                                }
+                            });
+                            
+                            // Cuando video termina
+                            video.addEventListener('ended', () => {
+                                if (window.musicStateManager) {
+                                    window.musicStateManager.terminarVideo();
+                                }
+                            });
+                            
+                            // Cuando usuario pausa video
+                            video.addEventListener('pause', () => {
+                                if (window.musicStateManager) {
+                                    // Solo cambiar a estado módulo si no está ya en video
+                                    if (window.musicStateManager.getEstado() === 'video') {
+                                        window.musicStateManager.terminarVideo();
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        });
+        
+        const contentArea = document.getElementById('content-area');
+        if (contentArea) {
+            observer.observe(contentArea, { childList: true, subtree: true });
+        }
+    }
+    
+    // Iniciar detección de videos
+    setTimeout(configurarDeteccionVideos, 1000);
+    
+    // BOTÓN REGRESAR
+    document.getElementById('btn-regresar-menu').addEventListener('click', () => {
+        // Fade out de música
+        cambiarVolumenSuave(0, 600);
+        
+        setTimeout(() => {
+            moduloMusic.pause();
+            moduloMusic.currentTime = 0;
+            
+            // Detener otros medios
+            document.querySelectorAll('audio, video').forEach(media => {
+                if (media.id !== 'modulo-bg-music') {
+                    media.pause();
+                    media.currentTime = 0;
+                }
+            });
+            
+            // Reanudar música principal
+            try {
+                if (window.opener && window.opener.reanudarMusicaFondo) {
+                    window.opener.reanudarMusicaFondo();
+                }
+            } catch (e) {}
+            
+            // Navegar
+            setTimeout(() => {
+                window.location.href = '../index.html';
+            }, 200);
+        }, 650);
+    });
+    
+    // CERRAR VENTANA
+    window.addEventListener('beforeunload', () => {
+        try {
+            if (window.opener && window.opener.reanudarMusicaFondo) {
+                window.opener.reanudarMusicaFondo();
+            }
+        } catch (e) {}
+    });
+</script>
+</body>
+</html>

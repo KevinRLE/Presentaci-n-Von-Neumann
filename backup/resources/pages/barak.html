@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Barak Audiovisual - Electro Cover</title>
+  <link rel="stylesheet" href="../css/barak.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <!-- Agrega Font Awesome para iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Fondo animado -->
+  <canvas id="canvas"></canvas>
+
+  <!-- Botón de regreso -->
+  <button id="btn-regresar-modulos" class="btn-regresar">
+    <i class="fas fa-arrow-left"></i> Regresar a Módulos
+  </button>
+
+  <main class="contenedor">
+    <header class="header-barak">
+      <h1>COLABORACIÓN CON BARAK AUDIOVISUAL</h1>
+      <!-- Logo centrado -->
+      <div class="logo-barak">
+        <img src="../assets/Barak logo.png" alt="Logo Barak Audiovisual">
+      </div>
+    </header>
+
+    <section class="descripcion">
+      <p>
+        En <span class="highlight">Electro Cover</span> contamos con el valioso apoyo de 
+        <strong class="highlight-blue">Barak Audiovisual</strong>, una empresa dedicada a la 
+        producción de sonido y Audiovisual profesional.
+      </p>
+      <p>
+        Gracias a su experiencia y tecnología, cada presentación se transforma 
+        en una experiencia inmersiva: iluminación, visuales potentes 
+        y sonido de alta fidelidad que hacen vibrar al público.
+      </p>
+    </section>
+
+    <!-- GALERÍA DE IMÁGENES MEJORADA -->
+    <section class="galeria">
+      <div class="galeria-titulo">
+        <h2><i class="fas fa-images"></i> GALERÍA DE PRODUCCIÓN</h2>
+        <p>Capturas de nuestros eventos y trabajos en colaboración</p>
+      </div>
+      
+      <div class="galeria-grid">
+        <!-- Imagen 1 -->
+        <div class="imagen-container">
+          <div class="imagen-wrapper">
+            <img src="../assets/Fotos Eventos/Barak Escenarios.jpg" alt="Equipo Barak en acción">
+          </div>
+          <div class="imagen-desc">
+            <i class="fas fa-users"></i> Equipo Barak trabajando en escenario
+          </div>
+        </div>
+        
+        <!-- Imagen 2 -->
+        <div class="imagen-container">
+          <div class="imagen-wrapper">
+            <img src="../assets/Suavemente Foto prod 3.jpg" alt="Escenario y luces">
+          </div>
+          <div class="imagen-desc">
+            <i class="fas fa-lightbulb"></i> Producción de luces y escenario
+          </div>
+        </div>
+        
+        <!-- Imagen 3 -->
+        <div class="imagen-container">
+          <div class="imagen-wrapper">
+            <img src="../assets/barak prod.jpg" alt="Producción de sonido">
+          </div>
+          <div class="imagen-desc">
+            <i class="fas fa-volume-up"></i> Control de sonido profesional
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN DE CONTACTO CON ENLACES -->
+    <section class="contacto">
+      <div class="info-contacto">
+        <h2><i class="fas fa-link"></i> ENLACES DE CONTACTO</h2>
+        
+        <div class="contacto-item">
+          <h3><i class="fas fa-globe"></i> Sitio Web Oficial</h3>
+          <a href="https://barakaudiovisual.com/" target="_blank" class="enlace-contacto">
+            <i class="fas fa-external-link-alt"></i> Visitar barakaudiovisual.com
+          </a>
+          <p class="link-desc">Portal principal con información sobre servicios y proyectos</p>
+        </div>
+        
+        <div class="contacto-item">
+          <h3><i class="fas fa-envelope"></i> Formulario de Contacto</h3>
+          <a href="https://barakaudiovisual.com/Contactos/" target="_blank" class="enlace-contacto">
+            <i class="fas fa-paper-plane"></i> Contactar directamente
+          </a>
+          <p class="link-desc">Sistema de contacto para consultas, cotizaciones y colaboraciones</p>
+        </div>
+        
+        <div class="contacto-item">
+          <h3><i class="fas fa-handshake"></i> Colaboración Especial</h3>
+          <div class="colaboracion-especial">
+            <p>
+              <i class="fas fa-sync-alt"></i> 
+              <strong>Alianza estratégica con Electro Cover</strong><br>
+              Integración tecnológica completa para experiencias audiovisuales inmersivas
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Script de fondo animado -->
+  <script src="../js/biografia.js"></script>
+  <script src="../js/nosotros.js"></script>
+
+  <!-- Estilos inline para las mejoras -->
+  <style>
+    /* Mejoras específicas para esta página sin modificar barak.css */
+    .highlight {
+      color: #00ffff;
+      font-weight: 600;
+      text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    }
+    
+    .highlight-blue {
+      color: #0066ff;
+      font-weight: 700;
+    }
+    
+    /* GALERÍA MEJORADA - IMÁGENES CENTRADAS */
+    .galeria {
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 0 20px;
+    }
+    
+    .galeria-titulo {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    
+    .galeria-titulo h2 {
+      color: #00ffff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+    
+    .galeria-titulo p {
+      color: #a3e0ff;
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+    
+    .galeria-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      justify-content: center;
+    }
+    
+    .imagen-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(10, 10, 26, 0.6);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s ease;
+      border: 2px solid rgba(0, 204, 255, 0.3);
+      padding: 15px;
+      height: 100%;
+    }
+    
+    .imagen-container:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 204, 255, 0.4);
+      border-color: #00ffff;
+    }
+    
+    .imagen-wrapper {
+      width: 100%;
+      height: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+    
+    .galeria img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    
+    .imagen-container:hover img {
+      transform: scale(1.05);
+    }
+    
+    .imagen-desc {
+      text-align: center;
+      color: #00ffff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      padding: 10px 15px;
+      background: rgba(0, 20, 40, 0.7);
+      border-radius: 8px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+    }
+    
+    .imagen-container:hover .imagen-desc {
+      background: rgba(0, 40, 80, 0.9);
+      color: #ffffff;
+    }
+    
+    /* Sección contacto */
+    .contacto {
+      max-width: 800px;
+      margin: 60px auto;
+      padding: 30px;
+      background: rgba(10, 10, 26, 0.7);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      border-radius: 15px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+    }
+    
+    .contacto h2 {
+      color: #00ffff;
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.8rem;
+      text-shadow: 0 0 15px #00ffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .contacto-item {
+      margin-bottom: 25px;
+      padding: 20px;
+      background: rgba(20, 20, 40, 0.5);
+      border-radius: 10px;
+      border-left: 3px solid #00ffff;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .contacto-item:hover {
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
+    }
+    
+    .contacto-item h3 {
+      color: #b3f0ff;
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .enlace-contacto {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #00ffff;
+      font-size: 1.1rem;
+      text-decoration: none;
+      padding: 12px 20px;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 8px;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      margin-bottom: 8px;
+    }
+    
+    .enlace-contacto:hover {
+      background: rgba(0, 255, 255, 0.2);
+      color: #ffffff;
+      border-color: #00ffff;
+      text-shadow: 0 0 10px #00ffff;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+    }
+    
+    .link-desc {
+      color: #a3e0ff;
+      font-size: 0.9rem;
+      margin-top: 8px;
+      font-style: italic;
+      line-height: 1.4;
+    }
+    
+    .colaboracion-especial {
+      padding: 20px;
+      background: rgba(0, 40, 80, 0.3);
+      border-radius: 10px;
+      border-left: 4px solid #00ffff;
+    }
+    
+    .colaboracion-especial p {
+      margin: 0;
+      color: #e0f7ff;
+      line-height: 1.6;
+    }
+    
+    .colaboracion-especial i {
+      color: #00ffff;
+      margin-right: 10px;
+    }
+    
+    .colaboracion-especial strong {
+      color: #00ffff;
+      font-size: 1.1rem;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .galeria {
+        padding: 0 15px;
+      }
+      
+      .galeria-titulo h2 {
+        font-size: 1.6rem;
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .galeria-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+      
+      .imagen-wrapper {
+        height: 220px;
+      }
+      
+      .contacto {
+        padding: 20px;
+        margin: 40px 20px;
+      }
+      
+      .contacto h2 {
+        font-size: 1.5rem;
+      }
+      
+      .contacto-item {
+        padding: 15px;
+      }
+      
+      .contacto-item h3 {
+        font-size: 1.1rem;
+      }
+      
+      .enlace-contacto {
+        font-size: 1rem;
+        padding: 10px 15px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .galeria-grid {
+        gap: 20px;
+      }
+      
+      .imagen-wrapper {
+        height: 200px;
+      }
+      
+      .galeria-titulo h2 {
+        font-size: 1.4rem;
+      }
+      
+      .contacto h2 {
+        font-size: 1.3rem;
+      }
+      
+      .imagen-desc {
+        font-size: 0.9rem;
+        padding: 8px 10px;
+      }
+    }
+    
+    /* Opción alternativa: si las imágenes tienen proporciones diferentes */
+    .imagen-wrapper.contain img {
+      object-fit: contain;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+    }
+    
+    /* Si quieres que todas las imágenes tengan la misma altura */
+    .galeria-grid.equal-height .imagen-wrapper {
+      height: 250px;
+    }
+  </style>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+# Dependencias de Node
+node_modules/
+
+# Compilaciones y ejecutables pesados de Neutralino
+dist/
+bin/
+.tmp/
+neutralino_temp/
+
+# Logs de error y ejecución
+*.log
+neutralinojs.log

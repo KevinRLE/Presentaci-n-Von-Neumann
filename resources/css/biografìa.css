@@ -1,0 +1,296 @@
+/* Reset y fuente */
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  overflow: hidden; /* elimina el scroll de la ventana */
+  background: transparent;
+}
+
+canvas {
+  position: fixed; /* que quede fijo de fondo */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0; /* siempre detrás del contenido */
+}
+
+
+/* Fondo con rejilla neón animada */
+.fondo-neon {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 255, 255, 0.1) 0px,
+      rgba(0, 255, 255, 0.1) 2px,
+      transparent 2px,
+      transparent 20px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 255, 255, 0.1) 0px,
+      rgba(0, 255, 255, 0.1) 2px,
+      transparent 2px,
+      transparent 20px
+    );
+  animation: moverLineas 20s linear infinite;
+  z-index: -2; /* Fondo neón detrás del canvas */
+}
+
+@keyframes moverLineas {
+  0% { background-position: 0 0; }
+  100% { background-position: 20px 20px; }
+}
+
+/* Tipografía neón */
+h1, h2, .neon-text {
+  font-family: 'Orbitron', sans-serif;
+  color: #0ff;
+  text-shadow:
+    0 0 5px #0ff,
+    0 0 10px #0ff,
+    0 0 20px #0ff,
+    0 0 40px #0ff,
+    0 0 80px #0ff;
+  animation: flicker 2s infinite alternate;
+}
+
+@keyframes flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    text-shadow:
+      0 0 4px #fff,
+      0 0 11px #fff,
+      0 0 19px #0ff,
+      0 0 40px #0ff,
+      0 0 80px #0ff;
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+  }
+}
+
+/* Contenedor principal */
+.cover-container {
+  position: relative;
+  z-index: 1; /* contenido por encima del canvas */
+  width: 100%;
+  height: 100%;
+  overflow-y: auto; /* scroll interno si el contenido es largo */
+  background: rgba(0, 0, 0, 0.6); /* un fondo semitransparente para leer mejor */
+  backdrop-filter: blur(5px); /* opcional: efecto de vidrio */
+  border-radius: 12px;
+  padding: 20px;
+}
+
+/* Carrusel estilizado */
+.carousel {
+  width: 70%;
+  max-height: 40vh;
+  margin: 30px auto;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+}
+
+.carousel-item img,
+.carousel-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.carousel-item img:hover,
+.carousel-item video:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.6);
+}
+
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: drop-shadow(0 0 5px #0ff);
+}
+
+/* Featurette */
+.featurette-heading {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02rem;
+  color: #0ff;
+  text-shadow: 0 0 10px #0ff;
+}
+
+p.lead {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #ddd;
+}
+
+.justificado {
+  text-align: justify;
+}
+
+.featurette-image {
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.featurette-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.6);
+}
+
+/* Divisores */
+.featurette-divider {
+  border-top: 2px solid rgba(0, 255, 255, 0.3);
+  box-shadow: 0 0 10px #0ff;
+  margin: 3rem 0;
+}
+
+/* Lista estilizada */
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+}
+
+ul li::before {
+  content: '>>';
+  position: absolute;
+  left: 0;
+  color: #0ff;
+  text-shadow: 0 0 5px #0ff;
+}
+
+/* Botón neón */
+.btn-neon {
+  display: inline-block;
+  background: transparent;
+  color: #0ff;
+  border: 2px solid #0ff;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  text-transform: uppercase;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px #0ff;
+}
+
+.btn-neon:hover {
+  background: #0ff;
+  color: #000;
+  box-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
+  text-shadow: none;
+}
+
+/* Footer */
+footer {
+  padding: 2rem 0;
+  background: rgba(0, 255, 255, 0.05);
+  border-top: 1px solid rgba(0, 255, 255, 0.2);
+}
+
+footer p {
+  font-size: 0.9rem;
+  color: #0ff;
+  text-shadow: 0 0 5px #0ff;
+}
+
+/* Social Media Icons */
+.social-icons {
+  margin-top: 1rem;
+}
+
+.social-icons a {
+  color: #0ff;
+  font-size: 1.5rem;
+  margin: 0 0.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: #fff;
+  text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .carousel-item img,
+  .carousel-item video {
+    height: 40vh;
+  }
+
+  .featurette-heading {
+    font-size: 1.8rem;
+  }
+
+  p.lead {
+    font-size: 1rem;
+  }
+
+  .featurette-image {
+    margin-bottom: 1.5rem;
+  }
+
+  .row.featurette {
+    text-align: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .cover-container {
+    padding: 1rem;
+  }
+
+  h1.neon-text {
+    font-size: 2rem;
+  }
+
+  .btn-neon {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* boton-regresar.css */
+.btn-regresar {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: transparent;
+  border: 2px solid #00eaff;
+  color: #00eaff;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-shadow: 0 0 10px #00eaff;
+  box-shadow: 0 0 15px rgba(0, 234, 255, 0.5);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.btn-regresar:hover {
+  background-color: #00eaff;
+  color: #000;
+  box-shadow: 0 0 25px #00eaff;
+  transform: scale(1.05);
+}

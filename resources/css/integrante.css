@@ -1,0 +1,127 @@
+/* --- Configuración base --- */
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'Orbitron', sans-serif;
+  color: #00f5ff;
+  background: radial-gradient(circle at 20% 20%, #020024, #090979, #000000);
+}
+
+/* --- Canvas del fondo --- */
+#background-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* --- Botón regresar --- */
+.btn-regresar {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: rgba(0, 255, 255, 0.15);
+  border: 1px solid #00f5ff;
+  color: #00f5ff;
+  font-size: 16px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-regresar:hover {
+  background: #00f5ff;
+  color: black;
+}
+
+/* --- Contenido principal --- */
+.perfil-integrante {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  height: 100vh;
+  padding: 0 8%;
+  gap: 50px;
+}
+
+/* --- Imagen del integrante (más pequeña) --- */
+.foto-container img {
+  width: 200px;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.foto-container img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
+}
+
+/* --- Descripción --- */
+.descripcion-container {
+  max-width: 600px;
+}
+
+.descripcion-container h1 {
+  font-size: 2.2rem;
+  color: #00f5ff;
+}
+
+.descripcion-container h2 {
+  color: #9be7ff;
+  margin-bottom: 15px;
+}
+
+.descripcion-container p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #e0f7fa;
+}
+
+/* ---------------- RESPONSIVE CELULAR ---------------- */
+@media (max-width: 768px) {
+
+  body {
+    overflow-y: auto;
+  }
+
+  .perfil-integrante {
+    flex-direction: column;
+    height: auto;
+    padding: 80px 6% 40px;
+    gap: 25px;
+    text-align: center;
+  }
+
+  .foto-container img {
+    width: 180px;
+  }
+
+  .descripcion-container {
+    max-width: 100%;
+  }
+
+  .descripcion-container h1 {
+    font-size: 1.8rem;
+  }
+
+  .descripcion-container h2 {
+    font-size: 1.1rem;
+  }
+
+  .descripcion-container p {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  .btn-regresar {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+}

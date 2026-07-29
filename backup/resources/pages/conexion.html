@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Conéctate con Electro Cover</title>
+  <link rel="stylesheet" href="../css/conexion.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/nosotros.css">
+  <!-- Font Awesome para iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <canvas id="canvas"></canvas>
+
+  <button id="btn-regresar-modulos" class="btn-regresar">
+    <i class="fas fa-arrow-left"></i> Regresar a Módulos
+  </button>
+
+  <main class="contenedor">
+    <h1 class="titulo-principal">ÚNETE A LA EXPERIENCIA ELECTRO COVER</h1>
+
+    <!-- REDES SOCIALES -->
+    <section class="redes-sociales">
+      <h2><i class="fas fa-share-alt"></i> CONÉCTATE CON NOSOTROS</h2>
+      
+      <div class="redes-grid">
+        <a href="https://www.instagram.com/electro_cover_?utm_source=ig_web_button_share_sheet&igsh=Y3RybDlwZzh0cGt5" 
+           target="_blank" class="red-social">
+          <i class="fab fa-instagram"></i>
+          <span>Instagram</span>
+          <span class="red-desc">Sigue nuestro día a día</span>
+        </a>
+        
+        <a href="https://www.facebook.com/ElectroCover80s" 
+           target="_blank" class="red-social">
+          <i class="fab fa-facebook"></i>
+          <span>Facebook</span>
+          <span class="red-desc">Eventos y noticias</span>
+        </a>
+        
+        <a href="https://www.tiktok.com/@electrocover80s?is_from_webapp=1&sender_device=pc" 
+           target="_blank" class="red-social">
+          <i class="fab fa-tiktok"></i>
+          <span>TikTok</span>
+          <span class="red-desc">Videos y tendencias</span>
+        </a>
+        
+        <div class="red-social contacto-directo">
+          <i class="fas fa-music"></i>
+          <span>Contrataciones</span>
+          <span class="red-desc">electrocover80s@gmail.com</span>
+        </div>
+      </div>
+    </section>
+    
+    <!-- SECCIÓN VIDEO CON CONTROLES -->
+    <section class="video-presentacion">
+      <div class="video-header">
+        <h2><i class="fas fa-play-circle"></i> MIRA NUESTRO VIDEO PROMOCIONAL</h2>
+        <p class="video-instructions">El video comienza automáticamente. Usa los controles para pausar/reproducir</p>
+      </div>
+      
+      <div class="video-container">
+        <video id="videoPromo" controls autoplay muted playsinline>
+          <source src="../assets/Videos/PROMO ELECTRO COVER WEB 2.MP4" type="video/mp4">
+          Tu navegador no soporta video.
+        </video>
+        
+        <div class="video-controls-overlay">
+          <button class="btn-control" id="btnPlayPause">
+            <i class="fas fa-play"></i>
+          </button>
+          <button class="btn-control" id="btnMute">
+            <i class="fas fa-volume-up"></i>
+          </button>
+          <button class="btn-control" id="btnFullscreen">
+            <i class="fas fa-expand"></i>
+          </button>
+        </div>
+      </div>
+      
+      <div class="video-status">
+        <span id="videoStatus">▶ Reproduciendo</span>
+        <span id="videoTime">00:00 / 00:00</span>
+      </div>
+    </section>
+
+    <!-- MENSAJE PRINCIPAL -->
+    <p class="mensaje">
+      <i class="fas fa-bolt"></i> Vibramos con la energía de cada beat.  
+      <br><i class="fas fa-heart"></i> Somos más que música, somos una conexión que enciende emociones.
+    </p>
+
+    <!-- SECCIÓN CONTACTO Y FECHAS -->
+    <section class="contacto-fechas">
+      <div class="contacto-info">
+        <h2><i class="fas fa-envelope"></i> CONTÁCTANOS</h2>
+        
+        <div class="email-item">
+          <h3><i class="fas fa-at"></i> Correo Electrónico</h3>
+          <a href="mailto:electrocover80s@gmail.com" class="email-link">
+            <i class="fas fa-paper-plane"></i> electrocover80s@gmail.com
+          </a>
+          <p class="email-desc">Para contrataciones, colaboraciones y consultas</p>
+        </div>
+        
+        <div class="fechas-disponibles">
+          <h3><i class="fas fa-calendar-alt"></i> FECHAS DISPONIBLES</h3>
+          <div class="fechas-banner">
+            <div class="fechas-content">
+              <i class="fas fa-star"></i>
+              <span class="fechas-text">¡RESERVA TU FECHA AHORA!</span>
+              <i class="fas fa-star"></i>
+            </div>
+            <div class="fechas-subtext">
+              Eventos privados • Conciertos • Festivales • Fiestas empresariales
+            </div>
+          </div>
+          <p class="fechas-llamado">¡No dejes que se agoten las fechas! Contáctanos para reservar tu evento</p>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <!-- FRASE FINAL -->
+    <div class="frase-final-container">
+      <p class="frase-final">
+        <i class="fas fa-bolt"></i> Nos vemos en el próximo escenario 
+        <i class="fas fa-bolt"></i>
+      </p>
+      <div class="frase-subtext">Electro Cover - Música que conecta emociones</div>
+    </div>
+  </main>
+
+  <!-- Script para controles de video -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const video = document.getElementById('videoPromo');
+      const btnPlayPause = document.getElementById('btnPlayPause');
+      const btnMute = document.getElementById('btnMute');
+      const btnFullscreen = document.getElementById('btnFullscreen');
+      const videoStatus = document.getElementById('videoStatus');
+      const videoTime = document.getElementById('videoTime');
+      
+      // Configurar video para autoplay con sonido después de interacción
+      video.muted = true; // Comienza silenciado por políticas de autoplay
+      
+      // Reproducir con sonido al primer clic
+      document.addEventListener('click', function iniciarVideo() {
+        if (video.paused) {
+          video.muted = false;
+          video.play();
+          videoStatus.textContent = '▶ Reproduciendo';
+          btnPlayPause.innerHTML = '<i class="fas fa-pause"></i>';
+        }
+        document.removeEventListener('click', iniciarVideo);
+      });
+      
+      // Formatear tiempo (segundos a MM:SS)
+      function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+      }
+      
+      // Actualizar tiempo del video
+      video.addEventListener('timeupdate', function() {
+        const current = formatTime(video.currentTime);
+        const total = formatTime(video.duration);
+        videoTime.textContent = `${current} / ${total}`;
+      });
+      
+      // Control play/pausa
+      btnPlayPause.addEventListener('click', function() {
+        if (video.paused) {
+          video.play();
+          videoStatus.textContent = '▶ Reproduciendo';
+          this.innerHTML = '<i class="fas fa-pause"></i>';
+        } else {
+          video.pause();
+          videoStatus.textContent = '⏸ Pausado';
+          this.innerHTML = '<i class="fas fa-play"></i>';
+        }
+      });
+      
+      // Control silenciar
+      btnMute.addEventListener('click', function() {
+        video.muted = !video.muted;
+        if (video.muted) {
+          this.innerHTML = '<i class="fas fa-volume-mute"></i>';
+        } else {
+          this.innerHTML = '<i class="fas fa-volume-up"></i>';
+        }
+      });
+      
+      // Control pantalla completa
+      btnFullscreen.addEventListener('click', function() {
+        if (!document.fullscreenElement) {
+          video.requestFullscreen().catch(err => {
+            console.log(`Error al intentar pantalla completa: ${err.message}`);
+          });
+        } else {
+          document.exitFullscreen();
+        }
+      });
+      
+      // Actualizar estado del botón play/pausa
+      video.addEventListener('play', function() {
+        btnPlayPause.innerHTML = '<i class="fas fa-pause"></i>';
+        videoStatus.textContent = '▶ Reproduciendo';
+      });
+      
+      video.addEventListener('pause', function() {
+        btnPlayPause.innerHTML = '<i class="fas fa-play"></i>';
+        videoStatus.textContent = '⏸ Pausado';
+      });
+      
+      // Iniciar reproducción automática (muted por políticas)
+      video.play().catch(e => {
+        console.log('Autoplay bloqueado:', e);
+        videoStatus.textContent = 'Haz clic para reproducir';
+      });
+    });
+  </script>
+
+  <!-- Estilos adicionales para nuevas secciones -->
+  <style>
+    /* ESTILOS PARA NUEVAS SECCIONES */
+    
+    /* Título principal */
+    .titulo-principal {
+      text-align: center;
+      color: #00ffff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 40px;
+      text-shadow: 0 0 20px #00ffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+    
+    /* Sección video mejorada */
+    .video-presentacion {
+      max-width: 900px;
+      margin: 0 auto 50px;
+      padding: 20px;
+      background: rgba(10, 10, 26, 0.7);
+      border-radius: 15px;
+      border: 2px solid rgba(0, 255, 255, 0.3);
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+    }
+    
+    .video-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .video-header h2 {
+      color: #00ffff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .video-instructions {
+      color: #b3f0ff;
+      font-size: 1rem;
+      font-style: italic;
+    }
+    
+    .video-container {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+    
+    #videoPromo {
+      width: 100%;
+      height: auto;
+      max-height: 500px;
+      display: block;
+      border-radius: 8px;
+      background: #000;
+    }
+    
+    .video-controls-overlay {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      display: flex;
+      gap: 10px;
+    }
+    
+    .btn-control {
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid #00ffff;
+      color: #00ffff;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-control:hover {
+      background: rgba(0, 255, 255, 0.2);
+      transform: scale(1.1);
+    }
+    
+    .video-status {
+      display: flex;
+      justify-content: space-between;
+      color: #00ffff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      padding: 0 10px;
+    }
+    
+    /* Sección contacto y fechas */
+    .contacto-fechas {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 30px;
+      background: rgba(10, 10, 26, 0.7);
+      border-radius: 15px;
+      border: 2px solid rgba(0, 255, 255, 0.3);
+    }
+    
+    .contacto-info h2 {
+      color: #00ffff;
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .email-item {
+      background: rgba(20, 20, 40, 0.5);
+      padding: 25px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+      border-left: 4px solid #00ffff;
+    }
+    
+    .email-item h3 {
+      color: #b3f0ff;
+      font-family: 'Orbitron', sans-serif;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .email-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #00ffff;
+      font-size: 1.3rem;
+      text-decoration: none;
+      padding: 15px 25px;
+      background: rgba(0, 255, 255, 0.1);
+      border-radius: 10px;
+      border: 2px solid rgba(0, 255, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .email-link:hover {
+      background: rgba(0, 255, 255, 0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 255, 255, 0.3);
+      border-color: #00ffff;
+    }
+    
+    .email-desc {
+      color: #a3e0ff;
+      margin-top: 10px;
+      font-size: 0.95rem;
+      font-style: italic;
+    }
+    
+    .fechas-disponibles {
+      background: rgba(30, 30, 60, 0.6);
+      padding: 25px;
+      border-radius: 12px;
+      border: 2px solid rgba(255, 0, 255, 0.4);
+    }
+    
+    .fechas-disponibles h3 {
+      color: #ff00ff;
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .fechas-banner {
+      background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
+      background-size: 200% auto;
+      animation: gradient 3s linear infinite;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .fechas-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 10px;
+    }
+    
+    .fechas-text {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #000;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    
+    .fechas-subtext {
+      color: #000;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    
+    .fechas-llamado {
+      color: #ff99ff;
+      text-align: center;
+      font-size: 1.1rem;
+      margin-top: 15px;
+      font-weight: 500;
+    }
+    
+    /* Sección redes sociales mejorada */
+    .redes-sociales {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 30px;
+      background: rgba(10, 10, 26, 0.7);
+      border-radius: 15px;
+      border: 2px solid rgba(0, 255, 255, 0.3);
+    }
+    
+    .redes-sociales h2 {
+      color: #00ffff;
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .redes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    
+    .red-social {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 25px;
+      background: rgba(20, 20, 40, 0.6);
+      border-radius: 12px;
+      text-decoration: none;
+      color: #00ffff;
+      border: 2px solid rgba(0, 255, 255, 0.3);
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    
+    .red-social:hover {
+      transform: translateY(-8px);
+      background: rgba(0, 255, 255, 0.1);
+      border-color: #00ffff;
+      box-shadow: 0 10px 20px rgba(0, 255, 255, 0.3);
+    }
+    
+    .red-social i {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+    
+    .red-social span:first-of-type {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    
+    .red-desc {
+      color: #a3e0ff;
+      font-size: 0.9rem;
+      margin-top: 5px;
+    }
+    
+    .contacto-directo {
+      border-color: rgba(255, 0, 255, 0.4);
+      color: #ff00ff;
+    }
+    
+    .contacto-directo:hover {
+      border-color: #ff00ff;
+    }
+    
+    /* Mensaje principal */
+    .mensaje {
+      text-align: center;
+      color: #b3f0ff;
+      font-size: 1.4rem;
+      line-height: 1.8;
+      margin: 40px auto;
+      max-width: 800px;
+      padding: 25px;
+      background: rgba(0, 40, 80, 0.3);
+      border-radius: 15px;
+      border: 1px solid rgba(0, 255, 255, 0.2);
+    }
+    
+    .mensaje i {
+      color: #00ffff;
+      margin-right: 10px;
+    }
+    
+    /* Frase final */
+    .frase-final-container {
+      text-align: center;
+      margin-top: 50px;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+    }
+    
+    .frase-final {
+      color: #00ffff;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
+    
+    .frase-subtext {
+      color: #a3e0ff;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .titulo-principal {
+        font-size: 1.8rem;
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .fechas-text {
+        font-size: 1.4rem;
+      }
+      
+      .fechas-content {
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .redes-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .frase-final {
+        font-size: 1.5rem;
+        flex-direction: column;
+        gap: 10px;
+      }
+      
+      .email-link {
+        font-size: 1.1rem;
+        padding: 12px 20px;
+      }
+      
+      .video-header h2 {
+        font-size: 1.4rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .titulo-principal {
+        font-size: 1.5rem;
+      }
+      
+      .fechas-text {
+        font-size: 1.2rem;
+      }
+      
+      .email-link {
+        font-size: 1rem;
+        padding: 10px 15px;
+      }
+      
+      .btn-control {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+      }
+    }
+  </style>
+
+  <script src="../js/biografia.js"></script>
+  <script src="../js/nosotros.js"></script>
+
+</body>
+</html>

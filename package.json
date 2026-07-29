@@ -1,0 +1,17 @@
+{
+  "name": "electrocover",
+  "version": "1.0.0",
+  "description": "ElectroCover App",
+  "main": "resources/index.html",
+  "scripts": {
+    "start": "neu run",
+    "build": "neu build --release",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@neutralinojs/neu": "^9.8.0"
+  },
+  "keywords": ["electrocover", "music", "app"],
+  "author": "ElectroCover Team",
+  "license": "MIT"
+}

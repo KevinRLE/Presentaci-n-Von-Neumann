@@ -1,0 +1,161 @@
+/* --- Ajuste general de la pantalla --- */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: black;
+}
+
+/* El canvas debe estar DETRÁS del contenido pero VISIBLE */
+#background-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Cambiado de -1 a 1 para que sea visible */
+  background: transparent; /* Asegurar que sea transparente */
+}
+
+/* Contenedor principal - debe estar POR ENCIMA del canvas */
+.container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  z-index: 2; /* Por encima del canvas */
+}
+
+/* Logo clickeable */
+.clickable-logo {
+  width: 180px;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.4s ease, opacity 0.6s ease, box-shadow 0.4s ease;
+  position: relative; /* Necesario para z-index */
+  z-index: 3; /* Más alto que el container */
+}
+
+.clickable-logo:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+}
+
+/* HUD debe estar por encima de todo */
+#hud-info {
+  position: absolute;
+  background: linear-gradient(135deg, rgba(0, 20, 30, 0.9) 0%, rgba(0, 40, 50, 0.9) 100%);
+  border: 1px solid rgba(0, 255, 255, 0.6);
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: rgb(0, 0, 0);
+  pointer-events: none;
+  z-index: 10; /* El más alto de todos */
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  max-width: 300px;
+  box-shadow: 0 4px 20px rgba(0, 255, 255, 0.15),
+              0 0 10px rgba(0, 200, 255, 0.1),
+              inset 0 0 5px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(5px);
+  overflow: hidden;
+}
+
+/* El resto de tu CSS se mantiene igual */
+/* Borde luminoso */
+#hud-info::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 14px;
+  background: linear-gradient(45deg, 
+             rgba(0, 255, 255, 0.3), 
+             rgba(0, 200, 255, 0.1), 
+             rgba(0, 255, 255, 0.3));
+  z-index: -1;
+  animation: borderGlow 3s linear infinite;
+}
+
+@keyframes borderGlow {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+  100% { opacity: 0.3; }
+}
+
+#hud-info h3 {
+  margin: 0;
+  font-size: 18px;
+  margin-bottom: 8px;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  color: #b3f0ff;
+  letter-spacing: 0.5px;
+}
+
+#hud-info p {
+  margin: 0;
+  font-size: 14px;
+  margin-bottom: 12px;
+  line-height: 1.4;
+  color: #e0f7ff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+#hud-info img {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin: 15px 0 20px;
+  border: 2px solid rgba(0, 255, 255, 0.4);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3),
+              inset 0 0 8px rgba(0, 255, 255, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#hud-info img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 200, 255, 0.4),
+              inset 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+#hud-info::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+             transparent, 
+             rgba(0, 255, 255, 0.4), 
+             transparent);
+  animation: particleMove 5s linear infinite;
+}
+
+@keyframes particleMove {
+  0% { transform: translateY(-10px); opacity: 0; }
+  50% { opacity: 0.6; }
+  100% { transform: translateY(120px); opacity: 0; }
+}
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+}
+
+.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
