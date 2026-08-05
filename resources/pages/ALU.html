@@ -1,40 +1,343 @@
 <!doctype html>
 <html lang="es" class="h-100">
+
 <head>
     <meta charset="utf-8">
-    <title>Unidad Aritmética y Registros</title>
+    <title>ALU</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap"
+        rel="stylesheet">
 
     <!-- Tu hoja de estilos -->
     <link href="../css/biografia.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/nosotros.css">
+    <link rel="stylesheet" href="../css/alu.css">
 
 </head>
 
-<body class="d-flex h-100 text-center bg-transparent text-light">
+<body class="bg-transparent text-light">
 
     <!-- Canvas de fondo -->
     <canvas id="canvas"></canvas>
     <div class="cover-container">
-        <!-- Botón de regreso -->
-        <button id="btn-regresar-modulos" class="btn-regresar">← Regresar a Módulos</button>
-        
+
         <!-- Header -->
-        <header class="mb-auto">
+        <header class="page-header">
+            <!-- Botón de regreso -->
+            <button id="btn-regresar-modulos" class="btn-regresar">← Regresar a Módulos</button>
+
             <div>
                 <h1 class="neon-text">Unidad Aritmética y Registros</h1>
             </div>
         </header>
-        
-        <!-- Main Content -->
-        
 
-        <!-- Footer -->
-        
+
+        <nav class="alu-tabs" role="tablist">
+            <button class="btn-alu-tab activo" data-tab="informacion"> Informacion</button>
+            <button class="btn-alu-tab" data-tab="operaciones"> Operaciones </button>
+            <button class="btn-alu-tab" data-tab="simulacion"> Simulacion </button>
+            <button class="btn-alu-tab" data-tab="videos"> Videos </button>
+        </nav>
+
+        <div class="alu-panel-content activo" data-panel="informacion">
+            <h2>¿Que es la Unidad Aritmetivo-Logica (ALU)?</h2>
+            <p>La unidad Aritmetivo-Logica es el componente de la Unidad central de procesamiento (PCU)
+                encargado de realizar las operaciones aritmeticas (Suma, resta, multiplicacion, divicion)
+                y logicas (AND, OR, XOR, NOT) que requieren las intrucciones de un programa
+            </p>
+
+            <p> La ALU recibe los datos desde los registros de la CPU, ejecuta la operacion indicada por la UC y
+                devuelve el
+                resultado para almacenarlo en un registro o en la memoria principal
+            </p>
+
+            <p>La ALU recibe los datos desde los registro de la CPU, ejecuta la oprecion indicada por la UC y devuelve
+                el resultado
+                para almacenarlo en un registro o en la memoria principal
+            </p>
+
+            <h3>¿Como funciona?</h3>
+            <div class="alu-pasos">
+                <div class="alu-paso">
+                    <div class="alu-numero">1</div>
+                    <p>La unidad de control interpreta la instruccion del programa</p>
+                </div>
+
+                <div class="alu-paso">
+                    <div class="alu-numero">2</div>
+                    <p>Los operandos son enviados desde los registros hacia la ALU</p>
+                </div>
+
+                <div class="alu-paso">
+                    <div class="alu-numero">3</div>
+                    <p>La ALU ejecuta la operacion aritmetica o logica solicitada</p>
+                </div>
+
+                <div class="alu-paso">
+                    <div class="alu-numero">4</div>
+                    <p>El resultado vuelve a un registro o a la memoria principal y se actualizan las banderas</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 25px;">Redistro de Banderas</h3>
+            <p> La ALU tambien actualiza un conjunto de banderas que indican el estado del resultado obtenido:</p>
+
+            <div class="flags-grid">
+                <div class="flag-item">
+                    <span class="letter">Z</span>
+                    <span class="name">Zero</span>
+                    <span class="desc">Resultado = 0</span>
+                </div>
+                <div class="flag-item">
+                    <span class="letter">C</span>
+                    <span class="name">Carry</span>
+                    <span class="desc">Acarreo</span>
+                </div>
+                <div class="flag-item">
+                    <span class="letter">N</span>
+                    <span class="name">Negative</span>
+                    <span class="desc">Resultado negativo</span>
+                </div>
+                <div class="flag-item">
+                    <span class="letter">V</span>
+                    <span class="name">Overflow</span>
+                    <span class="desc">Desbordamiento</span>
+                </div>
+            </div>
+        </div>
+
+        <!--Panel de operaciones-->
+        <div class="alu-panel-content" data-panel="operaciones">
+            <h2>Operaciones de la ALU</h2>
+            <p>La ALU puede ejecutar una amplia variedad de operaciones. Estas estan divididas en dos categorias</p>
+
+            <h3>Operaciones aritmeticas</h3>
+            <div class="operacion-grid">
+                <div class="operacion-card">
+                    <span class="simbolo">+</span>
+                    <span class="nombre">Suma</span>
+                    <span class="desc">A + B</span>
+                </div>
+                <div class="operacion-card">
+                    <span class="simbolo">-</span>
+                    <span class="nombre">Resta</span>
+                    <span class="desc">A - B</span>
+                </div>
+                <div class="operacion-card">
+                    <span class="simbolo">X</span>
+                    <span class="nombre">Multiplicacion</span>
+                    <span class="desc">A * B</span>
+                </div>
+                <div class="operacion-card">
+                    <span class="simbolo"> ➗</span>
+                    <span class="nombre">Divicion</span>
+                    <span class="desc">A + B</span>
+                </div>
+            </div>
+
+
+            <h3>Operaciones Logicas</h3>
+            <div class="operacion-grid">
+                <div class="operacion-card">
+                    <span class="simbolo">&</span>
+                    <span class="nombre">AND</span>
+                    <span class="desc">A & B</span>
+                </div>
+                <div class="operacion-card">
+                    <span class="simbolo">|</span>
+                    <span class="nombre">OR</span>
+                    <span class="desc">A | B</span>
+                </div>
+                <div class="operacion-card">
+                    <span class="simbolo">⊕</span>
+                    <span class="nombre">XOR</span>
+                    <span class="desc">A ⊕ B</span>
+                </div>
+                <div class="operacion-card">
+                    <span class="simbolo">¬</span>
+                    <span class="nombre">NOT</span>
+                    <span class="desc">~A</span>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 20px;">Tabla de Verdad de las operaciones logicas</h3>
+            <div style="overflow-x: auto;">
+                <table class="alu-tabla-operaciones">
+                    <thead>
+                        <tr>
+                            <th>A</th>
+                            <th>B</th>
+                            <th>AND</th>
+                            <th>OR</th>
+                            <th>XOR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!--Panel de simulacion-->
+        <div class="alu-panel-content" data-panel="simulacion">
+            <h2>Simulacion Interactiva</h2>
+            <p>Esta es una simulacion de como es que la ALU realiza operaciones</p>
+            <p>Introdusca dos numeros del 0 al 255 y selecione una operacion para ver el resultado</p>
+
+            <div class="alu-chip" id="aluChip" style="margin-top:15px;">
+                <!-- Entradas -->
+                <div class="io-row">
+                    <div class="io-group">
+                        <h3>📥 Operando A</h3>
+                        <div class="bits" id="bitsA">
+                            <div class="bit off">0</div>
+                            <div class="bit off">0</div>
+                            <div class="bit off">0</div>
+                            <div class="bit off">0</div>
+                            <div class="bit off">0</div>
+                            <div class="bit off">0</div>
+                            <div class="bit off">0</div>
+                            <div class="bit off">0</div>
+                        </div>
+                        <div class="bit-label">bit7 → bit0</div>
+                    </div>
+
+                    <div class="io-group">
+                        <h3>📥 Operando B</h3>
+                        <div class="bits" id="bitsB">
+                            <div class="bit off">0</div>
+                            <div class="bit off">0</div>
+                            <div class="bit off">0</div>
+                            <div class="bit off">0</div>
+                            <div class="bit off">0</div>
+                            <div class="bit off">0</div>
+                            <div class="bit off">0</div>
+                            <div class="bit off">0</div>
+                        </div>
+                        <div class="bit-label">bit7 → bit0</div>
+                    </div>
+                </div>
+
+                <!-- Flechas de flujo -->
+                <div class="flow-container">
+                    <div class="flow-arrow">
+                        <span>A</span>
+                        <span class="arrow-line"></span>
+                    </div>
+                    <div class="flow-arrow">
+                        <span>B</span>
+                        <span class="arrow-line"></span>
+                    </div>
+                </div>
+
+                <!-- Compuertas -->
+                <div class="gates-section" id="gatesContainer">
+                    <div class="gate" data-op="add"><span class="op-symbol">➕</span> ADD</div>
+                    <div class="gate" data-op="sub"><span class="op-symbol">➖</span> SUB</div>
+                    <div class="gate" data-op="and"><span class="op-symbol">&amp;</span> AND</div>
+                    <div class="gate" data-op="or"><span class="op-symbol">|</span> OR</div>
+                    <div class="gate" data-op="xor"><span class="op-symbol">⊕</span> XOR</div>
+                </div>
+
+                <!-- Salida -->
+                <div class="flow-container" style="justify-content:center; margin:5px 0;">
+                    <div class="flow-arrow">
+                        <span class="arrow-line" style="width:100px;"></span>
+                        <span style="color:#a78bfa;">RESULTADO</span>
+                    </div>
+                </div>
+
+                <div class="io-row">
+                    <div class="io-group" style="flex:1;">
+                        <h3>📤 Resultado</h3>
+                        <div class="bits" id="bitsResult">
+                            <div class="bit result">0</div>
+                            <div class="bit result">0</div>
+                            <div class="bit result">0</div>
+                            <div class="bit result">0</div>
+                            <div class="bit result">0</div>
+                            <div class="bit result">0</div>
+                            <div class="bit result">0</div>
+                            <div class="bit result">0</div>
+                        </div>
+                        <div class="bit-label">bit7 → bit0 · <span id="resultDecimal">0</span></div>
+                    </div>
+                </div>
+
+                <div class="status-bar">
+                    <div class="status-item">
+                        <span class="status-dot" id="statusDot"></span>
+                        <span id="statusText">Esperando operación...</span>
+                    </div>
+                    <div class="status-item">
+                        <span>Operación:</span>
+                        <span id="currentOp" style="color:#00d4ff; font-weight:600;">—</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel de Control -->
+            <div class="control-panel" style="margin-top:15px;">
+                <div class="control-group">
+                    <label>Operando A (0-255)</label>
+                    <input type="number" id="inputA" value="42" min="0" max="255">
+                </div>
+
+                <div class="control-group">
+                    <label>Operando B (0-255)</label>
+                    <input type="number" id="inputB" value="13" min="0" max="255">
+                </div>
+
+                <div class="control-group">
+                    <label>Operación</label>
+                    <select id="opSelect">
+                        <option value="add">+ ADD (Suma)</option>
+                        <option value="sub">- SUB (Resta)</option>
+                        <option value="and">&amp; AND</option>
+                        <option value="or">| OR</option>
+                        <option value="xor">⊕ XOR</option>
+                    </select>
+                </div>
+                <button class="btn-execute" id="executeBtn">▶ Ejecutar</button>
+            </div>
+        </div>
+
+        <div class="alu-panel-content" data-panel="videos">
+            <h2>Videos y imagenes</h2>
+            <P>Acontinuacion apareceran algunos videos y imagenes que ayudaran a comprender mejor el funcionamiento de
+                la ALU</P>
+        </div>
     </div>
 
     <!-- Scripts -->
@@ -42,6 +345,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="../js/biografia.js"></script>
     <script src="../js/nosotros.js"></script>
+    <script src="../js/alu.js"></script>
 
 </body>
+
 </html>
