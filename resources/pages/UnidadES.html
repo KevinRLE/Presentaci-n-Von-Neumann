@@ -8,7 +8,44 @@
   <!-- Tipografías -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/nosotros.css">
-
+<style>
+      .io-section {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        padding: 20px;
+        color: #ffffff;
+        margin-top: -35px;
+      }
+      .io-image img {
+        width: 700px;
+        border: 2px solid #00f0ff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+      }
+      .io-info {
+        display: flex;
+        flex-direction: column;
+      }
+      .io-info p {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+      }
+      .video-link {
+        color: #00f0ff; 
+        text-decoration: none;
+        padding: 10px 15px;
+        border: 1px solid #00f0ff;
+        border-radius: 5px;
+        width: fit-content;
+        transition: 0.3s;
+      }
+      .video-link:hover {
+        background-color: rgba(0, 240, 255, 0.15);
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.8);
+      }
+    </style>
 </head>
 <body>
 
@@ -21,6 +58,28 @@
   <header>
     <h1 class="neon-text">Unidad de E/S</h1>
   </header>
+  <div class="io-section">
+      <div class="io-image">
+        <!-- Reemplaza 'tu-imagen.jpg' por el nombre real de tu foto en la carpeta assets -->
+        <img src="../assets/ES.jpg" alt="Imagen E/S">
+      </div>
+      
+      <!-- Nuevo contenedor con estilo de panel -->
+      <div class="io-info-panel">
+        <h3 class="panel-subtitle">FUNCIONALIDAD DEL MÓDULO:</h3>
+        
+        <p>
+          La <strong>Unidad de Entradas y Salidas (E/S)</strong> es el subsistema encargado de gestionar, adaptar y sincronizar la transferencia de información bidireccional entre el núcleo de procesamiento (UCP y Memoria) y los dispositivos periféricos.
+        </p>
+        <p>
+          En el modelo de Von Neumann, este módulo es crucial porque actúa como interfaz traductora: convierte las señales del mundo exterior al formato binario que la máquina comprende, y viceversa, garantizando un flujo de datos eficiente para su ejecución o almacenamiento.
+        </p>
+
+        <a href="https://www.youtube.com/watch?v=E1zPmR9YlCY&t=1s" target="_blank" class="video-link">
+          ▶ Ver video en YouTube
+        </a>
+      </div>
+    </div>
 
   
   <script src="../js/covers.js"></script>
