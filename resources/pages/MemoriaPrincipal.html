@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Memoria Principal</title>
   <link rel="stylesheet" href="../css/trayectoria.css">
+  <link rel="stylesheet" href="../css/memoria-principal.css">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -17,13 +18,297 @@
 
   <main class="contenedor">
     <h1>Memoria Principal</h1>
+    <p class="mp-subtitulo">El modelo de Von Neumann utiliza la memoria principal para almacenar datos e instrucciones.</p>
 
-   
+    <!-- Indicador / selector de pantallas -->
+    <div class="mp-screens">
+      <button type="button" class="mp-screen-dot activo" data-screen="1">PANTALLA 1 · Introducción</button>
+      <button type="button" class="mp-screen-dot" data-screen="2">PANTALLA 2 · Memoria Interactiva</button>
+    </div>
+
+    <!-- ===================== PANTALLA 1: INTRODUCCIÓN ===================== -->
+    <section id="pantalla-1" class="mp-pantalla">
+
+      <!-- Botonera interactiva -->
+      <nav class="mp-tabs" role="tablist" aria-label="Secciones de Memoria Principal">
+        <button class="mp-tab-btn activo" data-tab="que-es" role="tab" aria-selected="true">
+          <span class="mp-ico">❓</span> ¿Qué es?
+        </button>
+        <button class="mp-tab-btn" data-tab="como-funciona" role="tab" aria-selected="false">
+          <span class="mp-ico">⚙️</span> ¿Cómo funciona?
+        </button>
+        <button class="mp-tab-btn" data-tab="imagen" role="tab" aria-selected="false">
+          <span class="mp-ico">🖼️</span> Imagen
+        </button>
+        <button class="mp-tab-btn" data-tab="video" role="tab" aria-selected="false">
+          <span class="mp-ico">🎬</span> Video
+        </button>
+        <button class="mp-tab-btn" data-tab="quiz" role="tab" aria-selected="false">
+          <span class="mp-ico">🧠</span> Mini Quiz
+        </button>
+      </nav>
+
+      <!-- Panel central de contenido -->
+      <section class="mp-panel" id="mp-panel">
+
+        <!-- ¿QUÉ ES? -->
+        <div class="mp-panel-content activo" data-panel="que-es">
+          <h2>¿Qué es la Memoria Principal?</h2>
+          <p>
+            La <strong>Memoria Principal</strong> (también llamada memoria central o RAM) es el componente
+            del modelo de Von Neumann encargado de almacenar, mientras el equipo está encendido,
+            tanto los <strong>datos</strong> como las <strong>instrucciones</strong> de los programas que la
+            CPU está ejecutando en ese momento.
+          </p>
+          <ul>
+            <li><strong>Único espacio compartido:</strong> a diferencia de otros modelos, guarda datos e instrucciones juntos, sin distinguirlos; es la CPU quien interpreta qué es cada cosa.</li>
+            <li><strong>Acceso aleatorio:</strong> cada posición tiene una dirección única y puede leerse o escribirse en cualquier orden, sin importar su ubicación física.</li>
+            <li><strong>Volatilidad:</strong> la memoria RAM pierde su contenido al apagarse el equipo; existe también memoria ROM, no volátil, para datos permanentes.</li>
+            <li><strong>Rapidez y capacidad:</strong> es más veloz que el almacenamiento secundario (disco), aunque de menor capacidad.</li>
+          </ul>
+        </div>
+
+        <!-- ¿CÓMO FUNCIONA? -->
+        <div class="mp-panel-content" data-panel="como-funciona">
+          <h2>¿Cómo funciona?</h2>
+          <p>
+            La memoria se organiza en celdas numeradas por <strong>direcciones</strong>. La CPU se comunica
+            con ella mediante tres buses, y cada operación de lectura o escritura sigue una
+            secuencia de pasos:
+          </p>
+          <div class="mp-pasos">
+            <div class="mp-paso">
+              <div class="mp-paso-num">1</div>
+              <p class="mp-paso-texto">La <strong>Unidad de Control</strong> coloca la dirección de memoria que necesita en el <strong>bus de direcciones</strong>.</p>
+            </div>
+            <div class="mp-paso">
+              <div class="mp-paso-num">2</div>
+              <p class="mp-paso-texto">Se envía una señal de <strong>lectura o escritura</strong> a través del <strong>bus de control</strong>, indicando la operación a realizar.</p>
+            </div>
+            <div class="mp-paso">
+              <div class="mp-paso-num">3</div>
+              <p class="mp-paso-texto">Si es lectura, la memoria coloca el contenido de esa dirección en el <strong>bus de datos</strong> para que la CPU lo reciba; si es escritura, la CPU envía el dato para guardarlo.</p>
+            </div>
+            <div class="mp-paso">
+              <div class="mp-paso-num">4</div>
+              <p class="mp-paso-texto">El <strong>Contador de Programa (PC)</strong> avanza a la siguiente dirección, y el ciclo de instrucción se repite.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- IMAGEN -->
+        <div class="mp-panel-content" data-panel="imagen">
+          <h2>Diagrama de la Memoria Principal</h2>
+          <div class="mp-imagen-wrap">
+            <svg class="mp-svg-diagrama" viewBox="0 0 640 380" xmlns="http://www.w3.org/2000/svg">
+              <!-- CPU -->
+              <rect x="30" y="140" width="130" height="100" rx="10" fill="rgba(0,255,170,0.08)" stroke="#00ffaa" stroke-width="2"/>
+              <text x="95" y="185" fill="#00ffaa" font-family="Orbitron, sans-serif" font-size="16" font-weight="700" text-anchor="middle">CPU</text>
+              <text x="95" y="205" fill="#7fdfff" font-family="Orbitron, sans-serif" font-size="10" text-anchor="middle">UC + ALU</text>
+
+              <!-- Buses -->
+              <line x1="160" y1="165" x2="270" y2="165" stroke="#00eaff" stroke-width="3"/>
+              <polygon points="270,165 260,160 260,170" fill="#00eaff"/>
+              <text x="215" y="155" fill="#00eaff" font-family="Orbitron, sans-serif" font-size="9" text-anchor="middle">BUS DIRECCIONES</text>
+
+              <line x1="270" y1="195" x2="160" y2="195" stroke="#00eaff" stroke-width="3"/>
+              <polygon points="160,195 170,190 170,200" fill="#00eaff"/>
+              <text x="215" y="215" fill="#00eaff" font-family="Orbitron, sans-serif" font-size="9" text-anchor="middle">BUS DATOS</text>
+
+              <line x1="160" y1="225" x2="270" y2="225" stroke="#ff8c00" stroke-width="2" stroke-dasharray="4,4"/>
+              <text x="215" y="238" fill="#ff8c00" font-family="Orbitron, sans-serif" font-size="9" text-anchor="middle">BUS CONTROL</text>
+
+              <!-- Memoria: cuadrícula de celdas -->
+              <rect x="270" y="60" width="340" height="260" rx="10" fill="rgba(0,234,255,0.05)" stroke="#00eaff" stroke-width="2"/>
+              <text x="440" y="45" fill="#00eaff" font-family="Orbitron, sans-serif" font-size="15" font-weight="700" text-anchor="middle">MEMORIA PRINCIPAL</text>
+
+              <!-- celdas RAM -->
+              <g font-family="Orbitron, sans-serif" font-size="9">
+                <!-- fila cabecera -->
+                <text x="290" y="78" fill="#b3f0ff">DIR</text>
+                <text x="345" y="78" fill="#b3f0ff">CONTENIDO</text>
+
+                <rect x="285" y="85" width="50" height="24" fill="rgba(0,255,170,0.08)" stroke="#00838f"/>
+                <text x="310" y="101" fill="#00ffaa" text-anchor="middle">0x00</text>
+                <rect x="340" y="85" width="220" height="24" fill="rgba(0,234,255,0.05)" stroke="#00838f"/>
+                <text x="450" y="101" fill="#dffcff" text-anchor="middle">01001010 (instrucción)</text>
+
+                <rect x="285" y="112" width="50" height="24" fill="rgba(0,255,170,0.08)" stroke="#00838f"/>
+                <text x="310" y="128" fill="#00ffaa" text-anchor="middle">0x01</text>
+                <rect x="340" y="112" width="220" height="24" fill="rgba(0,234,255,0.05)" stroke="#00838f"/>
+                <text x="450" y="128" fill="#dffcff" text-anchor="middle">11100011 (instrucción)</text>
+
+                <rect x="285" y="139" width="50" height="24" fill="rgba(0,255,170,0.08)" stroke="#00838f"/>
+                <text x="310" y="155" fill="#00ffaa" text-anchor="middle">0x02</text>
+                <rect x="340" y="139" width="220" height="24" fill="rgba(0,234,255,0.05)" stroke="#00838f"/>
+                <text x="450" y="155" fill="#dffcff" text-anchor="middle">00010101 (dato)</text>
+
+                <rect x="285" y="166" width="50" height="24" fill="rgba(0,255,170,0.08)" stroke="#00838f"/>
+                <text x="310" y="182" fill="#00ffaa" text-anchor="middle">0x03</text>
+                <rect x="340" y="166" width="220" height="24" fill="rgba(0,234,255,0.18)" stroke="#00eaff" stroke-width="1.5"/>
+                <text x="450" y="182" fill="#fff" text-anchor="middle">10110001 (dato) ← acceso actual</text>
+
+                <rect x="285" y="193" width="50" height="24" fill="rgba(0,255,170,0.08)" stroke="#00838f"/>
+                <text x="310" y="209" fill="#00ffaa" text-anchor="middle">0x04</text>
+                <rect x="340" y="193" width="220" height="24" fill="rgba(0,234,255,0.05)" stroke="#00838f"/>
+                <text x="450" y="209" fill="#dffcff" text-anchor="middle">01111000 (dato)</text>
+              </g>
+
+              <!-- Zona ROM -->
+              <rect x="285" y="235" width="275" height="65" rx="6" fill="rgba(255,140,0,0.06)" stroke="#ff8c00" stroke-width="1.5" stroke-dasharray="5,3"/>
+              <text x="422" y="253" fill="#ff8c00" font-family="Orbitron, sans-serif" font-size="10" font-weight="700" text-anchor="middle">ZONA ROM (no volátil)</text>
+              <text x="422" y="270" fill="#ffd9b3" font-family="Orbitron, sans-serif" font-size="8.5" text-anchor="middle">Firmware / configuración de fábrica</text>
+              <text x="422" y="285" fill="#ffd9b3" font-family="Orbitron, sans-serif" font-size="8.5" text-anchor="middle">Se conserva sin energía eléctrica</text>
+            </svg>
+          </div>
+          <div class="mp-leyenda">
+            <span><i style="background:#00ffaa"></i> Direcciones</span>
+            <span><i style="background:#00eaff"></i> Bus / RAM</span>
+            <span><i style="background:#ff8c00"></i> Control / ROM</span>
+          </div>
+        </div>
+
+        <!-- VIDEO -->
+        <div class="mp-panel-content" data-panel="video">
+          <h2>Video explicativo</h2>
+          <div class="mp-video-wrap">
+            <div class="mp-video-frame">
+              <iframe src="https://www.youtube.com/embed/aZ72gtQqrHY" title="Arquitectura de Von Neumann" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <p class="mp-video-credito">Video externo (YouTube) sobre la arquitectura de Von Neumann y sus componentes.</p>
+          </div>
+        </div>
+
+        <!-- MINI QUIZ -->
+        <div class="mp-panel-content" data-panel="quiz">
+          <h2>Mini Quiz: Memoria Principal</h2>
+          <p class="mp-quiz-intro">Responde las 5 preguntas y descubre tu puntuación final.</p>
+
+          <form id="mp-quiz-form">
+            <div class="mp-pregunta" data-pregunta="0">
+              <p class="mp-pregunta-titulo"><span class="mp-pregunta-num">1.</span>¿Qué almacena la memoria principal en el modelo de Von Neumann?</p>
+              <div class="mp-opciones">
+                <button type="button" class="mp-opcion" data-correcta="false">Solo los datos del programa</button>
+                <button type="button" class="mp-opcion" data-correcta="false">Solo las instrucciones del programa</button>
+                <button type="button" class="mp-opcion" data-correcta="true">Datos e instrucciones del programa en ejecución</button>
+                <button type="button" class="mp-opcion" data-correcta="false">Únicamente el sistema operativo</button>
+              </div>
+            </div>
+
+            <div class="mp-pregunta" data-pregunta="1">
+              <p class="mp-pregunta-titulo"><span class="mp-pregunta-num">2.</span>¿Cuál es la principal diferencia entre RAM y ROM?</p>
+              <div class="mp-opciones">
+                <button type="button" class="mp-opcion" data-correcta="true">La RAM es volátil y la ROM es no volátil</button>
+                <button type="button" class="mp-opcion" data-correcta="false">La RAM es no volátil y la ROM es volátil</button>
+                <button type="button" class="mp-opcion" data-correcta="false">Ambas pierden su contenido al apagar el equipo</button>
+                <button type="button" class="mp-opcion" data-correcta="false">No existe ninguna diferencia entre ellas</button>
+              </div>
+            </div>
+
+            <div class="mp-pregunta" data-pregunta="2">
+              <p class="mp-pregunta-titulo"><span class="mp-pregunta-num">3.</span>¿Qué bus indica la dirección de memoria que se desea leer o escribir?</p>
+              <div class="mp-opciones">
+                <button type="button" class="mp-opcion" data-correcta="false">Bus de datos</button>
+                <button type="button" class="mp-opcion" data-correcta="true">Bus de direcciones</button>
+                <button type="button" class="mp-opcion" data-correcta="false">Bus de control</button>
+                <button type="button" class="mp-opcion" data-correcta="false">Bus de expansión</button>
+              </div>
+            </div>
+
+            <div class="mp-pregunta" data-pregunta="3">
+              <p class="mp-pregunta-titulo"><span class="mp-pregunta-num">4.</span>Según Von Neumann, ¿cómo almacena la memoria los datos y las instrucciones?</p>
+              <div class="mp-opciones">
+                <button type="button" class="mp-opcion" data-correcta="false">En zonas físicamente separadas</button>
+                <button type="button" class="mp-opcion" data-correcta="true">Juntos, sin diferenciarlos; la CPU los interpreta</button>
+                <button type="button" class="mp-opcion" data-correcta="false">Solo puede almacenar instrucciones</button>
+                <button type="button" class="mp-opcion" data-correcta="false">Los cifra automáticamente al guardarlos</button>
+              </div>
+            </div>
+
+            <div class="mp-pregunta" data-pregunta="4">
+              <p class="mp-pregunta-titulo"><span class="mp-pregunta-num">5.</span>¿Qué ocurre con el contenido de la memoria RAM si se corta la energía eléctrica?</p>
+              <div class="mp-opciones">
+                <button type="button" class="mp-opcion" data-correcta="false">Permanece intacto</button>
+                <button type="button" class="mp-opcion" data-correcta="false">Se guarda automáticamente en la ROM</button>
+                <button type="button" class="mp-opcion" data-correcta="true">Se pierde por completo</button>
+                <button type="button" class="mp-opcion" data-correcta="false">Se transfiere al disco duro</button>
+              </div>
+            </div>
+
+            <div class="mp-quiz-acciones">
+              <button type="button" id="mp-btn-verificar" class="mp-btn-accion">Verificar respuestas</button>
+              <button type="button" id="mp-btn-reintentar" class="mp-btn-accion" style="display:none;">Reintentar</button>
+            </div>
+          </form>
+
+          <div id="mp-resultado" class="mp-resultado">
+            <p class="mp-resultado-puntaje" id="mp-resultado-puntaje">0 / 5</p>
+            <p class="mp-resultado-mensaje" id="mp-resultado-mensaje"></p>
+          </div>
+        </div>
+
+      </section>
+    </section>
+
+    <!-- ===================== PANTALLA 2: MEMORIA INTERACTIVA ===================== -->
+    <section id="pantalla-2" class="mp-pantalla" hidden>
+
+      <p class="mp-subtitulo mp2-nota">
+        Explorador de memoria RAM: haz clic en cualquier dirección para inspeccionarla.
+      </p>
+
+      <div class="mp2-layout">
+
+        <!-- ============ 1. MATRIZ DE MEMORIA ============ -->
+        <div class="mp2-matriz-wrap">
+          <div class="mp2-matriz-titulo">RAM — 100 direcciones (00–99)</div>
+
+          <div class="mp2-grid" id="mp2-grid" role="grid" aria-label="Matriz de memoria RAM"></div>
+
+          <div class="mp2-leyenda">
+            <span><i class="mp2-swatch instruccion"></i> Instrucción</span>
+            <span><i class="mp2-swatch dato"></i> Dato</span>
+            <span><i class="mp2-swatch libre"></i> Libre</span>
+            <span><i class="mp2-swatch seleccionada"></i> Seleccionada</span>
+          </div>
+        </div>
+
+        <!-- ============ 2. PANEL LATERAL ============ -->
+        <aside class="mp2-panel-lateral">
+
+          <div class="mp2-caja mp2-info-direccion" id="mp2-info-direccion">
+            <h3>Dirección de memoria</h3>
+            <p class="mp2-placeholder" id="mp2-placeholder">
+              Haz clic en cualquier celda de la matriz para ver su contenido.
+            </p>
+            <dl class="mp2-datos" id="mp2-datos" hidden>
+              <dt>Dirección</dt><dd id="mp2-dato-direccion">—</dd>
+              <dt>Contenido</dt><dd id="mp2-dato-contenido">—</dd>
+              <dt>Tipo</dt><dd id="mp2-dato-tipo">—</dd>
+              <dt>Estado</dt><dd id="mp2-dato-estado">—</dd>
+              <dt>Explicación</dt><dd id="mp2-dato-explicacion" class="mp2-explicacion">—</dd>
+            </dl>
+          </div>
+
+          <div class="mp2-caja mp2-info-simulacion">
+            <h3>Estado de la simulación</h3>
+            <ul class="mp2-stats">
+              <li><span>PC (Program Counter)</span><strong id="mp2-pc">00</strong></li>
+              <li><span>Dirección actual</span><strong id="mp2-dir-actual">—</strong></li>
+              <li><span>Acción de la CPU</span><strong id="mp2-accion">En espera</strong></li>
+              <li><span>Memoria ocupada</span><strong id="mp2-ocupada">0%</strong></li>
+            </ul>
+          </div>
+
+        </aside>
+      </div>
+    </section>
 
   </main>
 
   <script src="../js/biografia.js"></script> <!-- Reutiliza el fondo animado -->
   <script src="../js/nosotros.js"></script>
+  <script src="../js/memoria-principal.js"></script>
 
 </body>
 </html>

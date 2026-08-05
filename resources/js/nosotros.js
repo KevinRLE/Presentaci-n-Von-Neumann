@@ -342,3 +342,46 @@ window.addEventListener('error', function(e) {
     console.error('❌ Error global:', e.error);
 });
 
+// LÓGICA DE SIMULACIÓN UC & MMU
+document.addEventListener('DOMContentLoaded', () => {
+  const btnGenerar = document.getElementById('btn-generar-dir');
+  const btnPasoMMU = document.getElementById('btn-paso-mmu');
+  const btnForzarSwap = document.getElementById('btn-forzar-swap');
+  
+  const inputDirVirtual = document.getElementById('dir-virtual');
+  const txtEstadoUC = document.getElementById('uc-estado');
+  const txtDirFisica = document.getElementById('dir-fisica-res');
+  const bloqueSwap = document.getElementById('bloque-swap');
+  const txtSwapEstado = document.getElementById('txt-swap-estado');
+
+  // 1. UC Genera dirección virtual aleatoria
+  btnGenerar?.addEventListener('click', () => {
+    const randomBin = Array.from({length: 11}, () => Math.round(Math.random())).join('');
+    inputDirVirtual.value = randomBin;
+    txtEstadoUC.textContent = 'Estado: Dirección enviada a la MMU';
+    txtEstadoUC.style.color = '#00ffff';
+  });
+
+  // 2. MMU Traduce a Dirección Física en RAM
+  btnPasoMMU?.addEventListener('click', () => {
+    const dirVirt = inputDirVirtual.value;
+    // Simulación de adición del Marco de Memoria
+    const marco = "4005"; 
+    txtDirFisica.textContent = `${marco}${dirVirt.slice(-6)}`;
+    txtEstadoUC.textContent = 'Estado: Traducción exitosa -> RAM';
+    txtEstadoUC.style.color = '#00ff88';
+    
+    bloqueSwap.className = 'bloque-memoria swap-inactivo';
+    txtSwapEstado.textContent = 'Inactivo (Sin fallo de página)';
+  });
+
+  // 3. Simulación de Error / Page Fault / Invocación de Swap
+    btnForzarSwap?.addEventListener('click', () => {
+    txtEstadoUC.textContent = '⚠️ Error: Fallo de Página (Solicitando nueva dirección a la UC...)';
+    txtEstadoUC.style.color = '#ff0055';
+    
+    txtDirFisica.textContent = 'Acceso Denegado en RAM';
+    bloqueSwap.className = 'bloque-memoria swap-alerta';
+    txtSwapEstado.textContent = '🚨 SWAP ACTIVO: Transfiriendo datos al Disco Duro (Memoria Virtual)';
+    });
+});

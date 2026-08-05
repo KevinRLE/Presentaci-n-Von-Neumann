@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Unidad de Control (PC)</title>
+  <title>Unidad de Control (PC) - Arquitectura Von Neumann</title>
   <link rel="stylesheet" href="../css/nosotros.css" />
   
   <!-- Fuente Orbitron -->
@@ -24,9 +24,197 @@
   <!-- Contenido principal -->
   <main class="contenedor-principal">
     <header class="header-nosotros">
-      <h1 class="titulo-principal">Unidad de Control (PC)</h1>
+      <h1 class="titulo-principal">Unidad de Control (UC)</h1>
+      <p class="subtitulo">Arquitectura Von Neumann & Gestión de Memoria</p>
       <div class="linea-divisoria"></div>
     </header>
+
+    <!-- INTRODUCCIÓN Y CONCEPTO VON NEUMANN -->
+    <p class="uc-intro">
+      En el modelo de <strong>Von Neumann</strong>, la <strong>Unidad de Control (UC)</strong> es considerada el verdadero <strong>cerebro de la PC</strong>. Mientras la ALU realiza las operaciones matemáticas y lógicas, la UC coordina, ordena y sincroniza la ejecución de instrucciones, administrando el ciclo de vida de los procesos y comunicándose directamente con la unidad de manejo de memoria (MMU).
+    </p>
+
+    <!-- ARRANQUE Y PROCESO DE COMPILACIÓN -->
+    <section class="seccion-uc">
+      <h2>🖥️ Del Código Fuente a la Ejecución en RAM</h2>
+      <p class="uc-intro" style="margin-bottom:20px;">
+        Antes de que la UC pueda ejecutar una aplicación, el compilador transforma el código mediante análisis <strong>Morfosintáctico y Semántico</strong> hasta generar el <strong>código objeto</strong> (binario). Posteriormente, el <em>Montador</em> (Linker) enlaza las bibliotecas del sistema (p. ej. DLL) y el <em>Cargador</em> (Loader) transfiere la imagen del proceso a la memoria RAM.
+      </p>
+      
+      <div class="uc-flujo">
+        <div class="uc-flujo-paso">Análisis Morfosintáctico / Semántico</div>
+        <div class="uc-flujo-flecha">→</div>
+        <div class="uc-flujo-paso">Código Objeto</div>
+        <div class="uc-flujo-flecha">→</div>
+        <div class="uc-flujo-paso">Montador (Linker)</div>
+        <div class="uc-flujo-flecha">→</div>
+        <div class="uc-flujo-paso">Cargador (Loader) a RAM</div>
+      </div>
+    </section>
+
+    <!-- CICLO DE INSTRUCCIÓN E INTERRUPCIONES -->
+    <section class="seccion-uc">
+      <h2>🔄 Ciclo de Instrucción, Timer y TRAPs</h2>
+      <p class="uc-intro" style="margin-bottom: 20px;">
+        La UC nunca se detiene. Para garantizar que ningún proceso monopolice la CPU, el sistema utiliza un <strong>Timer Clock</strong> con intervalos de tiempo llamados <em>Time Slices</em>.
+      </p>
+      <div class="uc-flujo">
+        <div class="uc-flujo-paso">FETCH<br><small>Buscar instrucción en RAM/Caché</small></div>
+        <div class="uc-flujo-flecha">→</div>
+        <div class="uc-flujo-paso">DECODE<br><small>UC interpreta instrucción</small></div>
+        <div class="uc-flujo-flecha">→</div>
+        <div class="uc-flujo-paso">EXECUTE<br><small>Ejecución en ALU o Memoria</small></div>
+      </div>
+      <div class="uc-destacado" style="margin-top:20px;">
+        <strong>⚠️ Interrupciones & TRAP:</strong> Cuando expira el <em>Time Slice</em> o se requiere una entrada/salida (E/S), el timer envía una interrupción al procesador. El comando <strong>TRAP</strong> se utiliza para alternar estados y permitir el cambio de contexto entre el modo usuario y el modo núcleo.
+      </div>
+    </section>
+
+    <!-- REGISTROS CLAVE -->
+    <section class="seccion-uc">
+      <h2>📍 Registros de la CPU supervisados por la UC</h2>
+      <div class="grid-conceptos">
+        <div class="tarjeta-concepto">
+          <h3><span class="etiqueta-registro">PC / UPC</span> Program Counter</h3>
+          <p>Guarda la dirección de memoria de la siguiente instrucción a ejecutar. Determina la app o proceso en turno durante su Quantum.</p>
+        </div>
+        <div class="tarjeta-concepto">
+          <h3><span class="etiqueta-registro">RI</span> Registro de Instrucción</h3>
+          <p>Guarda el código binario de la instrucción que se está ejecutando en tiempo real (ej. copiar, pegar, operaciones de cálculo).</p>
+        </div>
+        <div class="tarjeta-concepto">
+          <h3><span class="etiqueta-registro">SP</span> Stack Pointer</h3>
+          <p>Puntero especial que guarda la ubicación del elemento superior dentro de la pila (Stack) de la memoria asignada al proceso.</p>
+        </div>
+        <div class="tarjeta-concepto">
+          <h3><span class="etiqueta-registro">Status</span> Registro de Estado</h3>
+          <p>Define el nivel de privilegio de ejecución del microprocesador: <strong>User Mode</strong> (usuario con permisos restringidos) o <strong>Kernel Mode</strong> (administrador con acceso total al hardware).</p>
+        </div>
+        <div class="tarjeta-concepto">
+          <h3><span class="etiqueta-registro">RIED</span> Registro de Identificación</h3>
+          <p>Identifica el proceso activo en el procesador y apunta a su respectiva Tabla de Páginas para la traducción de memoria virtual.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESOS, BCP Y CORE IMAGE -->
+    <section class="seccion-uc">
+      <h2>⚙️ Gestión de Procesos, BCP y Core Image</h2>
+      <div class="grid-conceptos">
+        <div class="tarjeta-concepto">
+          <h3>📦 Proceso y Core Image</h3>
+          <p>Un proceso requiere 4 elementos clave en RAM: Código Objeto, Estructuras de Datos, Variables/Constantes y Datos. El <em>Core Image</em> es la foto completa del estado del proceso en ejecución.</p>
+        </div>
+        <div class="tarjeta-concepto">
+          <h3>🗂️ BCP (Bloque de Control de Proceso)</h3>
+          <p>Estructura de datos que salva el estado completo del proceso (Registros, Instrucciones y Mapa de Memoria). Permite restaurar el proceso exacto donde fue pausado.</p>
+        </div>
+        <div class="tarjeta-concepto">
+          <h3>⏱️ Quantum & Planificación</h3>
+          <p>Tiempo asignado por el planificador (Scheduler) bajo algoritmos como <em>Round Robin</em> para forzar la alternancia justa entre tareas.</p>
+        </div>
+        <div class="tarjeta-concepto">
+          <h3>🌀 Pseudoparalelismo</h3>
+          <p>La alternancia ultrarrápida entre procesos fragmentados por quantums simula la ejecución simultánea en un único núcleo físicamente.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRADUCCIÓN VIRTUAL + MMU + SWAP -->
+    <section class="seccion-uc">
+      <h2>🧭 Traducción Virtual: UC $\rightarrow$ MMU $\rightarrow$ RAM / Disco</h2>
+      <p class="uc-intro">
+        Para evitar accesos directos desordenados a la RAM, la UC envía una <strong>Dirección Virtual aleatoria</strong> a la <strong>MMU</strong> (Memory Management Unit). La MMU se encarga de traducirla e interpretarla hacia una dirección física real.
+      </p>
+      
+      <div class="uc-flujo">
+        <div class="uc-flujo-paso"><strong>UC</strong><br><small>Genera Dir. Virtual</small></div>
+        <div class="uc-flujo-flecha">→</div>
+        <div class="uc-flujo-paso"><strong>MMU</strong><br><small>Traduce & Consulta Tabla Páginas</small></div>
+        <div class="uc-flujo-flecha">→</div>
+        <div class="uc-flujo-paso"><strong>RAM</strong><br><small>Asigna Dirección Física (Marcos)</small></div>
+      </div>
+
+      <div class="uc-destacado">
+        <strong>⚠️ Manejo de Fallos (Page Fault & SWAP):</strong><br>
+        Si la dirección solicitada no está en la memoria RAM o no hay marcos disponibles, se produce un error de acceso. La MMU notifica el fallo y <strong>solicita una nueva dirección a la UC</strong>. Si la RAM está saturada, el sistema invoca el proceso de <strong>Swap (Intercambio)</strong>, creando una estructura auxiliar en el Disco Duro (Memoria Virtual):
+        <ul>
+          <li><strong>Windows:</strong> Gestiona la memoria virtual mediante un archivo de intercambio dinámico.</li>
+          <li><strong>Linux:</strong> Asigna la memoria virtual mediante una partición dedicada del disco (Partición Swap).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- MÓDULO DE SIMULACIÓN UC & MMU (VIRTUALIZACIÓN DE MEMORIA) -->
+<section class="seccion-uc simulador-mmu-container">
+  <h2>🎮 Simulador: UC $\rightarrow$ MMU $\rightarrow$ RAM / Swap</h2>
+  
+  <div class="panel-simulador">
+    <!-- Panel Izquierdo: Unidad de Control (UC) -->
+    <div class="caja-componente uc-box">
+      <h3>Unidad de Control (UC)</h3>
+      <div class="input-group">
+        <label for="dir-virtual">Dirección Virtual (Generada):</label>
+        <input type="text" id="dir-virtual" value="10011110011" readonly>
+      </div>
+      <button id="btn-generar-dir" class="btn-simular">⚡ Generar Dir. Virtual</button>
+      <div id="uc-estado" class="estado-indicador">Estado: En espera...</div>
+    </div>
+
+    <!-- Panel Central: MMU & Tabla de Páginas -->
+    <div class="caja-componente mmu-box">
+      <h3>MMU (Memory Management Unit)</h3>
+      <div class="mmu-status">
+        <span>Offset / Byte: <strong>2 KB</strong></span>[cite: 1]
+      </div>
+      
+      <h4>Tabla de Páginas (Mapeo)</h4>
+      <table class="tabla-paginas">
+        <thead>
+          <tr>
+            <th>Página Virtual</th>
+            <th>Marco Física (RAM)</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody id="tabla-paginas-body">
+          <tr><td>Página 01</td><td>Marco 04 (0101A104)</td><td class="status-ok">En RAM</td></tr>[cite: 1]
+          <tr><td>Página 02</td><td>Marco 01 (161BB001)</td><td class="status-ok">En RAM</td></tr>[cite: 1]
+          <tr id="pagina-fault"><td>Página 03</td><td>--</td><td class="status-fault">Page Fault (Disco)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Panel Derecho: Destino Físico (RAM vs SWAP) -->
+    <div class="caja-componente ram-swap-box">
+      <h3>Destino de Memoria</h3>
+      <div id="bloque-ram" class="bloque-memoria ram-activa">
+        <h4>Memoria RAM (Física)</h4>
+        <p>Dirección Traducida: <span id="dir-fisica-res">40051110011</span></p>[cite: 1]
+      </div>
+      
+      <div id="bloque-swap" class="bloque-memoria swap-inactivo">
+        <h4>Memoria Virtual / Swap (Disco Duro)</h4>[cite: 1, 2]
+        <p id="txt-swap-estado">Inactivo (Sin fallo de página)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controles del Ciclo -->
+  <div class="controles-simulacion">
+    <button id="btn-paso-mmu" class="btn-simular accion">▶ Tratar Dirección (MMU)</button>
+    <button id="btn-forzar-swap" class="btn-simular alerta">⚠️ Forzar Error (Page Fault / Swap)</button>
+  </div>
+</section>
+
+    <!-- FUENTES -->
+    <div class="uc-fuentes">
+      <strong>Fuentes:</strong>
+      [1] Apuntes de Clase — Modelo Von Neumann y Traducción de Memoria ·
+      [2] <a href="https://biblioteca.univalle.edu.ni/files/original/309c1300f3a2ea011ca41277fca99b6d0303e0fb.pdf" target="_blank" rel="noopener">Biblioteca UNIVALLE</a> ·
+      [3] <a href="https://app.craigndave.org/little_man_computer.html" target="_blank" rel="noopener">SlideShare — Procesos</a> ·
+      [4] <a href="https://es.scribd.com/document/449695786/I-Jesus-Carretero-Perez-Sistemas-pdf" target="_blank" rel="noopener">Scribd — J. Carretero Pérez, Sistemas Operativos</a>
+    </div>
 
   </main>
 
