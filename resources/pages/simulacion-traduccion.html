@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulación: MMU, Paginación y Ejecución Von Neumann</title>
+  
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/memoria-principal.css">
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Audiowide', cursive, sans-serif;
+      background-color: #050811;
+      color: #fff;
+    }
+
+    .sim-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: rgba(0, 0, 0, 0.6);
+      border-bottom: 1px solid rgba(0, 240, 255, 0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .sim-contenedor {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 20px;
+      max-width: 1500px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    .sim-panel-controles {
+      background: rgba(13, 17, 23, 0.85);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      border-radius: 12px;
+      padding: 16px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+    }
+
+    .mmu-box {
+      background: rgba(0, 240, 255, 0.05);
+      border: 1px solid #00f0ff;
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 12px;
+      box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.1);
+    }
+
+    .mmu-grid-translation {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      text-align: center;
+      margin: 8px 0;
+      font-family: monospace;
+    }
+
+    .mmu-bit-box {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(0, 240, 255, 0.4);
+      padding: 4px;
+      border-radius: 4px;
+    }
+
+    .btn-sim {
+      padding: 8px 14px;
+      border: 1px solid #00f0ff;
+      background: rgba(0, 240, 255, 0.1);
+      color: #00f0ff;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Audiowide', cursive;
+      font-size: 11px;
+      transition: all 0.2s;
+    }
+
+    .btn-sim:hover {
+      background: #00f0ff;
+      color: #000;
+      box-shadow: 0 0 15px #00f0ff;
+    }
+
+    .btn-play {
+      border-color: #00ffaa;
+      color: #00ffaa;
+      background: rgba(0, 255, 170, 0.1);
+    }
+
+    .btn-play:hover {
+      background: #00ffaa;
+      color: #000;
+      box-shadow: 0 0 15px #00ffaa;
+    }
+
+    .btn-regresar-mod {
+      color: #00f0ff;
+      border: 1px solid #00f0ff;
+      background: rgba(0, 240, 255, 0.1);
+      padding: 8px 16px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 12px;
+      transition: all 0.3s;
+    }
+
+    .btn-regresar-mod:hover {
+      background: #00f0ff;
+      color: #000;
+      box-shadow: 0 0 15px #00f0ff;
+    }
+
+        /* Estado: Celdas visitadas/leídas */
+    .mp2-celda.visitada {
+    border: 1px solid #00f0ff !important;
+    background: rgba(0, 240, 255, 0.15) !important;
+    box-shadow: inset 0 0 8px rgba(0, 240, 255, 0.4);
+    }
+
+    /* Estado: Celdas modificadas/escritas */
+    .mp2-celda.modificada {
+    border: 1px solid #ff00ff !important;
+    background: rgba(255, 0, 255, 0.2) !important;
+    box-shadow: 0 0 12px #ff00ff !important;
+    }
+
+    /* Selector de Velocidad */
+    .speed-select {
+    background: rgba(0, 0, 0, 0.6);
+    color: #00ffaa;
+    border: 1px solid #00ffaa;
+    border-radius: 6px;
+    padding: 6px;
+    font-family: 'Audiowide', cursive;
+    font-size: 11px;
+    cursor: pointer;
+    }
+
+        /* Celda ocupada por el Sistema Operativo u otro Proceso */
+    .mp2-celda-ocupado_externo {
+    background: rgba(255, 68, 68, 0.15) !important;
+    border: 1px solid rgba(255, 68, 68, 0.4) !important;
+    color: #ff5555 !important;
+    }
+
+    /* Modal de Inspección al hacer clic en una celda */
+    .sim-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    }
+
+    .sim-modal-content {
+    background: #0d1117;
+    border: 1px solid #00f0ff;
+    box-shadow: 0 0 20px #00f0ff;
+    border-radius: 12px;
+    padding: 20px;
+    width: 320px;
+    text-align: center;
+    font-family: 'Audiowide', cursive;
+    }
+  </style>
+</head>
+<body class="mp-body">
+
+  <canvas id="mp-bg-canvas"></canvas>
+
+  <header class="sim-header">
+    <div>
+      <a href="modulo.html" class="btn-regresar-mod">← Regresar a Módulos</a>
+    </div>
+    <div style="text-align: center;">
+      <h1 style="font-size: 1.3rem; color: #00f0ff; margin: 0; text-shadow: 0 0 10px #00f0ff;">⚡ Simulación MMU: Traducción Paginada (2 Niveles)</h1>
+      <span style="font-size: 0.75rem; color: #aaa;">Dirección Lógica (UC) ➔ MMU (P1, P2, Offset) ➔ Marco Físico (RAM)</span>
+    </div>
+    <div></div>
+  </header>
+
+  <main class="sim-contenedor">
+    
+    <!-- MATRIZ DE MEMORIA FÍSICA -->
+    <section class="mp2-vista-matriz">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <h2 style="color:#00f0ff; font-size:1rem; margin:0;">Memoria Principal Física (10 Marcos de 10 Celdas)</h2>
+        <button id="sim-btn-random" class="btn-sim" style="border-color:#ff00ff; color:#ff00ff;">🔀 Generar Nuevo Programa RAM</button>
+      </div>
+
+      <div class="mp2-grid" id="sim-matriz-grid">
+        <!-- Renderizado dinámico -->
+      </div>
+    </section>
+
+    <!-- PANEL LATERAL MMU Y CONTROL -->
+    <aside class="sim-panel-controles">
+      <h3 style="color:#fff; margin-bottom:10px; font-size:1rem;">🎮 Control del Procesador</h3>
+      
+      <!-- PANEL DE CONTROL CON SELECTOR DE VELOCIDAD -->
+    <div style="display:flex; gap:6px; align-items:center; margin-bottom:12px;">
+    <button id="sim-btn-step" class="btn-sim">⏭ Paso</button>
+    <button id="sim-btn-play" class="btn-sim btn-play">▶ Auto</button>
+    <button id="sim-btn-reset" class="btn-sim">🔄 Reset</button>
+
+    <!-- Selector de velocidad del ciclo -->
+    <select id="sim-speed" class="speed-select">
+        <option value="600">0.5x</option>
+        <option value="300" selected>1x (Rápido)</option>
+        <option value="150">2x (Ultra)</option>
+        <option value="50">⚡ Turbo</option>
+    </select>
+    </div>
+
+      <!-- ESTADO DE UC Y CPU -->
+      <div class="mp2-caja">
+        <h4 style="color:#00f0ff; margin-bottom:6px; font-size:0.85rem;">UC (Unidad de Control)</h4>
+        <ul style="list-style:none; padding:0; font-size:0.8rem; margin:0;">
+          <li style="display:flex; justify-content:space-between; margin-bottom:4px;">
+            <span>Dir. Lógica Emitida (PC):</span>
+            <strong id="sim-dir-logica" style="color:#00ffaa;">vDir: 00</strong>
+          </li>
+          <li style="display:flex; justify-content:space-between; margin-bottom:4px;">
+            <span>Registro Instrucción (IR):</span>
+            <strong id="sim-ir" style="color:#00f0ff;">—</strong>
+          </li>
+          <li style="display:flex; justify-content:space-between;">
+            <span>Etapa del Ciclo:</span>
+            <strong id="sim-fase" style="color:#ff8c00;">FETCH</strong>
+          </li>
+        </ul>
+      </div>
+
+      <!-- TRADUCCIÓN MMU (PAGINACIÓN 2 NIVELES) -->
+      <div class="mmu-box">
+        <h4 style="color:#00f0ff; font-size:0.85rem; margin:0 0 6px 0;">🧠 MMU: Paginación de 2 Niveles</h4>
+        
+        <div class="mmu-grid-translation">
+          <div class="mmu-bit-box">
+            <span style="font-size:0.65rem; color:#aaa;">P1 (Directorio)</span>
+            <div id="mmu-p1" style="color:#00f0ff; font-weight:bold;">-</div>
+          </div>
+          <div class="mmu-bit-box">
+            <span style="font-size:0.65rem; color:#aaa;">P2 (Tabla Pág)</span>
+            <div id="mmu-p2" style="color:#a78bfa; font-weight:bold;">-</div>
+          </div>
+          <div class="mmu-bit-box">
+            <span style="font-size:0.65rem; color:#aaa;">Desplazamiento</span>
+            <div id="mmu-offset" style="color:#ff8c00; font-weight:bold;">-</div>
+          </div>
+        </div>
+
+        <div style="font-size:0.75rem; background:rgba(0,0,0,0.4); padding:6px; border-radius:4px; margin-top:6px;">
+          <div>Marco Físico (Frame): <span id="mmu-frame" style="color:#00ffaa;">-</span></div>
+          <div>Dirección Física RAM: <span id="mmu-dir-fisica" style="color:#ff00ff; font-weight:bold;">-</span></div>
+        </div>
+      </div>
+
+      <!-- REGISTRO Y DECODIFICACIÓN -->
+      <div style="background:rgba(0,0,0,0.5); border:1px solid rgba(255,255,255,0.1); padding:10px; border-radius:8px; margin-top:10px;">
+        <h4 style="font-size:0.8rem; color:#00f0ff; margin:0 0 4px 0;">📟 Decodificación Opcode</h4>
+        <div style="font-size:0.75rem;">
+          <div>Instrucción: <span id="sim-asm" style="color:#00ffaa;">—</span></div>
+          <div>Opcode Hex / Bin: <span id="sim-bin" style="color:#a78bfa;">—</span></div>
+        </div>
+      </div>
+
+      <div style="margin-top:10px; background:rgba(255,255,255,0.05); padding:8px; border-radius:6px;">
+        <h4 style="font-size:0.75rem; color:#aaa; margin:0 0 2px 0;">Acción de Sistema:</h4>
+        <p id="sim-accion-desc" style="font-size:0.75rem; color:#fff; font-family:sans-serif; margin:0;">Inicia con Paso o Auto para observar la traducción de la MMU.</p>
+      </div>
+
+    </aside>
+
+  </main>
+  <!-- MODAL FLOTANTE DE INSPECCIÓN DE CELDA -->
+  <div id="sim-modal" class="sim-modal">
+    <div class="sim-modal-content">
+      <h3 id="modal-dir" style="color: #00f0ff; margin-top: 0;">Celda RAM: --</h3>
+      <hr style="border-color: rgba(0,240,255,0.2);">
+      <p style="font-size: 0.85rem; margin: 8px 0;">Estado: <strong id="modal-estado" style="color: #00ffaa;">--</strong></p>
+      <p style="font-size: 0.85rem; margin: 8px 0;">Proceso: <strong id="modal-proceso" style="color: #a78bfa;">--</strong></p>
+      <p style="font-size: 0.85rem; margin: 8px 0;">Contenido: <span id="modal-contenido" style="color: #fff;">--</span></p>
+      <button id="modal-btn-close" class="btn-sim" style="margin-top: 15px;">Cerrar</button>
+    </div>
+  </div>
+  
+  <script src="../js/simulacion-traduccion.js"></script>
+</body>
+</html>

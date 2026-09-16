@@ -40,6 +40,35 @@
             border-color: rgba(255, 85, 85, 0.3);
             box-shadow: 0 0 15px rgba(255, 85, 85, 0.2);
         }
+
+        /* ESTILO DEL BOTÓN FLOTANTE DE SIMULACIÓN */
+        .btn-sim-flotante {
+            position: fixed;
+            bottom: 20px;
+            right: 210px; /* Se posiciona a la izquierda del botón 'Regresar al Menú' */
+            padding: 10px 20px;
+            color: #00ffaa;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #00ffaa;
+            border-radius: 25px;
+            font-family: 'Audiowide', cursive;
+            font-size: 12px;
+            text-decoration: none;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 15px rgba(0, 255, 170, 0.25);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-sim-flotante:hover {
+            background: #00ffaa;
+            color: #000;
+            box-shadow: 0 0 25px #00ffaa;
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
@@ -60,6 +89,7 @@
     <header id="header-electro">
         <h1 class="logo-title">Von Neumann</h1>
         <p class="instructions">Pasa el cursor sobre los módulos y haz doble clic para explorarlos</p>
+
     </header>
     
     <div id="hud-info" class="hidden">
@@ -73,7 +103,11 @@
             <!-- Aquí se insertará el contenido dinámicamente -->
         </div>
     </div>
-    
+
+    <!-- BOTÓN FLOTANTE FUTURISTA -->
+    <a href="simulacion-traduccion.html" class="btn-sim-flotante">
+        ⚡ Simulación
+    </a>
     <button id="btn-regresar-menu">Regresar al Menú</button>
     
     <!-- INDICADOR DE MÚSICA (SOLO TEXTO) -->
