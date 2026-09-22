@@ -12,6 +12,9 @@
     <!-- Estilos -->
     <link rel="stylesheet" href="../css/modulo.css">
 
+    <!-- Estilos de la Simulación gráfica (archivo nuevo, no modifica modulo.css) -->
+    <link rel="stylesheet" href="../css/simulacion-grafica.css">
+
     <!-- Fuente futurista -->
     <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
 
@@ -108,6 +111,11 @@
     <a href="simulacion-traduccion.html" class="btn-sim-flotante">
         ⚡ Simulación
     </a>
+
+    <!-- BOTÓN INDEPENDIENTE: SIMULACIÓN GRÁFICA DEL MODELO -->
+    <button type="button" id="btn-sim-grafica" title="Simular el funcionamiento del modelo sobre el propio diagrama">
+        🔬 Simulación gráfica
+    </button>
     <button id="btn-regresar-menu">Regresar al Menú</button>
     
     <!-- INDICADOR DE MÚSICA (SOLO TEXTO) -->
@@ -115,6 +123,9 @@
 
     <!-- Script principal -->
     <script src="../js/modulos.js"></script>
+
+    <!-- Simulación gráfica (se superpone al modelo; no modifica modulos.js) -->
+    <script src="../js/simulacion-grafica.js"></script>
 
     <!-- SISTEMA DE MÚSICA INTELIGENTE CON ATENUACIÓN -->
 <script>

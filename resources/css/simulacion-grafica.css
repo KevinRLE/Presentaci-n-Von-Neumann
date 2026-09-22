@@ -1,0 +1,296 @@
+/* =========================================================================
+   simulacion-grafica.css
+   Estilos EXCLUSIVOS de la "Simulación gráfica" del Modelo de Von Neumann.
+   Todo va con el prefijo .sg- para no chocar con los estilos existentes.
+   Reutiliza la paleta del proyecto: fondo #0a0a1a, cian #00f0ff, verde #00ffaa.
+   ========================================================================= */
+
+/* ---------- Botón flotante (independiente del botón "⚡ Simulación") ---------- */
+#btn-sim-grafica {
+    position: fixed;
+    bottom: 20px;
+    right: 395px;              /* a la izquierda del botón ⚡ Simulación */
+    padding: 10px 20px;
+    color: #00f0ff;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid #00f0ff;
+    border-radius: 25px;
+    font-family: 'Audiowide', cursive;
+    font-size: 12px;
+    cursor: pointer;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#btn-sim-grafica:hover {
+    background: #00f0ff;
+    color: #000;
+    box-shadow: 0 0 25px #00f0ff;
+    transform: translateY(-2px);
+}
+
+/* Mientras la simulación está activa se oculta: se sale desde la propia barra */
+body.sg-activa #btn-sim-grafica {
+    display: none;
+}
+
+/* ---------- El lienzo del modelo cede espacio a la barra inferior ---------- */
+body.sg-activa #canvas-container {
+    height: calc(100vh - 190px) !important;
+}
+
+/* =========================================================================
+   BARRA INFERIOR: explicación paso a paso + controles
+   ========================================================================= */
+.sg-barra {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 190px;
+    z-index: 15;
+    display: flex;
+    gap: 18px;
+    padding: 12px 20px 12px 20px;
+    box-sizing: border-box;
+    color: #e0f7ff;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(180deg, rgba(0, 20, 30, 0.96) 0%, rgba(4, 8, 22, 0.98) 100%);
+    border-top: 1px solid rgba(0, 255, 255, 0.45);
+    box-shadow: 0 -6px 30px rgba(0, 200, 255, 0.18);
+    backdrop-filter: blur(8px);
+    animation: sgSubir 0.4s ease-out;
+}
+
+@keyframes sgSubir {
+    from { transform: translateY(100%); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ---------- Columna de explicación ---------- */
+.sg-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sg-encabezado {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.sg-fase {
+    font-family: 'Audiowide', cursive;
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    color: #001018;
+    background: #00ffaa;
+    box-shadow: 0 0 12px rgba(0, 255, 170, 0.5);
+    white-space: nowrap;
+}
+
+.sg-contador {
+    font-size: 11px;
+    color: #7fdfff;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.sg-titulo {
+    font-family: 'Audiowide', cursive;
+    font-size: 15px;
+    color: #b3f0ff;
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Barra de progreso */
+.sg-progreso {
+    height: 4px;
+    width: 100%;
+    background: rgba(0, 255, 255, 0.12);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.sg-progreso-relleno {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #00f0ff, #00ffaa);
+    box-shadow: 0 0 10px rgba(0, 255, 200, 0.7);
+    transition: width 0.25s linear;
+}
+
+/* Rejilla con los 4 datos del paso */
+.sg-detalles {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    flex: 1;
+    min-height: 0;
+}
+
+.sg-campo {
+    background: rgba(0, 240, 255, 0.05);
+    border: 1px solid rgba(0, 255, 255, 0.22);
+    border-left: 3px solid #00f0ff;
+    border-radius: 6px;
+    padding: 6px 9px;
+    overflow: auto;
+}
+
+.sg-campo:nth-child(2) { border-left-color: #00ffaa; }
+.sg-campo:nth-child(3) { border-left-color: #ffd166; }
+.sg-campo:nth-child(4) { border-left-color: #b388ff; }
+
+.sg-campo h4 {
+    margin: 0 0 3px 0;
+    font-size: 9.5px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #7fdfff;
+    font-weight: 700;
+}
+
+.sg-campo p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.35;
+    color: #e6fbff;
+}
+
+/* Chips de registros (PC / IR / Acumulador) */
+.sg-registros {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.sg-chip {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(0, 255, 255, 0.35);
+    color: #b3f0ff;
+    white-space: nowrap;
+}
+
+.sg-chip b {
+    color: #00ffaa;
+    font-weight: 700;
+}
+
+/* ---------- Columna de controles ---------- */
+.sg-controles {
+    width: 218px;
+    flex: 0 0 218px;
+    /* margen derecho para no chocar con los botones flotantes ya existentes */
+    margin-right: 380px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: min-content;
+    gap: 8px;
+    align-content: center;
+}
+
+.sg-btn {
+    padding: 9px 6px;
+    font-family: 'Audiowide', cursive;
+    font-size: 10.5px;
+    letter-spacing: 0.5px;
+    color: #b3f0ff;
+    background: linear-gradient(135deg, rgba(0, 20, 30, 0.9) 0%, rgba(0, 40, 50, 0.9) 100%);
+    border: 1px solid rgba(0, 255, 255, 0.6);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 0 10px rgba(0, 200, 255, 0.2);
+}
+
+.sg-btn:hover:not(:disabled) {
+    transform: scale(1.04);
+    box-shadow: 0 0 18px rgba(0, 255, 255, 0.5);
+    background: linear-gradient(135deg, rgba(0, 30, 40, 0.9) 0%, rgba(0, 50, 60, 0.9) 100%);
+}
+
+.sg-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.sg-btn.sg-principal {
+    grid-column: 1 / -1;
+    color: #001018;
+    background: linear-gradient(135deg, #00f0ff 0%, #00ffaa 100%);
+    border-color: #00ffaa;
+    font-size: 12px;
+    padding: 10px 6px;
+}
+
+.sg-btn.sg-salir {
+    grid-column: 1 / -1;
+    color: #ffb3b3;
+    border-color: rgba(255, 120, 120, 0.5);
+}
+
+.sg-btn.sg-salir:hover {
+    box-shadow: 0 0 18px rgba(255, 120, 120, 0.4);
+}
+
+/* =========================================================================
+   RESPONSIVE
+   ========================================================================= */
+@media (max-width: 1200px) {
+    .sg-detalles { grid-template-columns: repeat(2, 1fr); }
+    .sg-controles { margin-right: 380px; }
+}
+
+@media (max-width: 900px) {
+    #btn-sim-grafica {
+        bottom: 66px;
+        right: 20px;
+    }
+    .sg-barra {
+        height: 240px;
+        flex-direction: column-reverse;
+        padding-bottom: 60px;
+    }
+    body.sg-activa #canvas-container {
+        height: calc(100vh - 240px) !important;
+    }
+    .sg-controles {
+        width: 100%;
+        flex: 0 0 auto;
+        margin-right: 0;
+        grid-template-columns: repeat(5, 1fr);
+    }
+    .sg-btn.sg-principal,
+    .sg-btn.sg-salir { grid-column: auto; }
+    .sg-detalles { grid-template-columns: 1fr 1fr; }
+    .sg-campo p { font-size: 11px; }
+}
+
+@media (max-width: 600px) {
+    .sg-barra { height: 265px; }
+    body.sg-activa #canvas-container {
+        height: calc(100vh - 265px) !important;
+    }
+    .sg-detalles { grid-template-columns: 1fr; }
+    .sg-titulo { font-size: 13px; white-space: normal; }
+}
