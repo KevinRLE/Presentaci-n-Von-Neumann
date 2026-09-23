@@ -713,3 +713,238 @@ body {
   color: #fff;
   box-shadow: 0 0 12px #ff0055;
 }
+
+/* --- TARJETA DE DIAGRAMA DE TRADUCCIÓN MMU --- */
+.diagrama-mmu-card {
+  background: rgba(13, 17, 23, 0.75);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: 10px;
+  padding: 16px;
+  margin: 20px 0;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+  backdrop-filter: blur(8px);
+}
+
+.mmu-title {
+  color: #00f0ff;
+  font-size: 0.9rem;
+  margin: 0 0 12px 0;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.mmu-step {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.step-label {
+  font-size: 0.75rem;
+  color: #a0a0a0;
+  font-weight: 500;
+}
+
+/* Desglose de la Dirección Lógica */
+.logic-address-box {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1.5fr;
+  gap: 4px;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.bit-chunk {
+  padding: 6px 4px;
+  border-radius: 4px;
+  color: #000;
+  font-weight: bold;
+}
+
+.bit-chunk.segment { background: #ff5555; }
+.bit-chunk.p1 { background: #00f0ff; }
+.bit-chunk.p2 { background: #a78bfa; }
+.bit-chunk.offset { background: #ff8c00; }
+
+.flow-arrow {
+  text-align: center;
+  color: #00f0ff;
+  font-size: 0.85rem;
+  margin: 4px 0;
+  font-weight: bold;
+}
+
+/* --- ESTILO DIAGRAMA TIPO CUADERNO --- */
+.diagrama-cuaderno-card {
+  background: rgba(10, 15, 24, 0.85);
+  border: 1.5px solid #00f0ff;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 20px 0;
+  font-family: 'Orbitron', monospace;
+  color: #e0e0e0;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
+}
+
+.cuaderno-titulo {
+  color: #00f0ff;
+  font-size: 1rem;
+  margin-top: 0;
+  margin-bottom: 12px;
+  text-align: center;
+  border-bottom: 1px dashed rgba(0, 240, 255, 0.3);
+  padding-bottom: 6px;
+}
+
+.cuaderno-label {
+  font-size: 0.8rem;
+  color: #ff8c00;
+  font-weight: bold;
+}
+
+/* Registro Lógico Superior */
+.registro-logico {
+  display: flex;
+  border: 1px solid #00f0ff;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 6px;
+  text-align: center;
+}
+
+.celda-reg {
+  padding: 6px 4px;
+  border-right: 1px solid rgba(0, 240, 255, 0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: rgba(0, 240, 255, 0.05);
+}
+
+.celda-reg:last-child { border-right: none; }
+.celda-reg span { font-weight: bold; font-size: 0.85rem; }
+.celda-reg small { font-size: 0.65rem; color: #aaa; }
+
+.celda-reg.seg { background: rgba(255, 85, 85, 0.15); color: #ff5555; }
+.celda-reg.p1 { background: rgba(0, 240, 255, 0.15); color: #00f0ff; }
+.celda-reg.p2 { background: rgba(167, 139, 250, 0.15); color: #a78bfa; }
+.celda-reg.offset { background: rgba(255, 140, 0, 0.15); color: #ff8c00; flex-grow: 1; }
+
+/* Desglose de textos */
+.desglose-bits {
+  font-size: 0.72rem;
+  color: #b0b0b0;
+  margin: 10px 0;
+  padding-left: 8px;
+  border-left: 2px solid #a78bfa;
+  line-height: 1.4;
+}
+
+/* Tablas Paralelas */
+.grid-tablas-cuaderno {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 15px 0;
+}
+
+.tabla-bloque {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  padding: 6px;
+}
+
+.tabla-tag {
+  font-size: 0.68rem;
+  color: #00f0ff;
+  display: block;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.tabla-mmu {
+  font-size: 0.75rem;
+}
+
+.row-mmu {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 6px;
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
+  color: #888;
+}
+
+.row-mmu .idx { color: #ff8c00; font-weight: bold; }
+
+.row-mmu.active-p1 {
+  background: rgba(0, 240, 255, 0.2);
+  color: #00f0ff;
+  font-weight: bold;
+}
+
+.row-mmu.active-p2 {
+  background: rgba(167, 139, 250, 0.25);
+  color: #a78bfa;
+  font-weight: bold;
+}
+
+.flecha-intermedia {
+  color: #00f0ff;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Resultado en RAM */
+.resultado-fisico-container {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.registro-fisico {
+  display: flex;
+  border: 1.5px solid #00ffaa;
+  border-radius: 4px;
+  padding: 6px 12px;
+  background: rgba(0, 255, 170, 0.1);
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.marco-hex { color: #00ffaa; margin-right: 8px; }
+.offset-bin { color: #ff8c00; }
+
+/* Rejilla de RAM */
+.ram-grid-mini {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3px;
+  width: 120px;
+  height: 40px;
+  border: 1px solid #555;
+  padding: 2px;
+  background: #000;
+}
+
+.ram-cell {
+  background: #111;
+  border: 1px solid #222;
+}
+
+.ram-cell.active-byte {
+  background: #ff5555;
+  color: #fff;
+  font-size: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  box-shadow: 0 0 8px #ff5555;
+}
