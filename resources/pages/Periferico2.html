@@ -1,193 +1,200 @@
-<!doctype html>
-<html lang="es" class="h-100">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <meta charset="utf-8">
-    <title>Periférico 2 · Monitor</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
-    <link href="../css/biografia.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/nosotros.css">
-    <link rel="stylesheet" href="../css/periferico2.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Periféricos de Salida - Von Neumann</title>
+  
+  <!-- Enlaces a tus otros estilos -->
+  <link rel="stylesheet" href="../css/conexion.css">
+  <link rel="stylesheet" href="../css/nosotros.css">
+  <!-- ENLACE AL NUEVO ARCHIVO CSS QUE CREAMOS ARRIBA -->
+  <link rel="stylesheet" href="../css/periferico2.css">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+<body>
 
-<body class="d-flex h-100 text-center bg-transparent text-light">
+  <!-- Fondo animado -->
+  <canvas id="canvas"></canvas>
 
-    <canvas id="canvas"></canvas>
-    <div class="cover-container">
-        <button id="btn-regresar-modulos" class="btn-regresar">← Regresar a Módulos</button>
-        
-        <header class="mb-auto">
-            <div>
-                <h1 class="neon-text">🖥️ Periférico 2 · Monitor</h1>
-                <p style="color:#94a3b8; font-size:0.9rem; letter-spacing:2px; font-family:'Poppins',sans-serif;">
-                    Dispositivo de Salida · Simulación interactiva
-                </p>
-            </div>
-        </header>
+  <button id="btn-regresar-modulos" class="btn-regresar" onclick="window.location.href='../index.html'">
+    <i class="fas fa-arrow-left"></i> Regresar a Módulos
+  </button>
 
-        <nav class="peri-tabs" role="tablist">
-            <button class="btn-peri-tab activo" data-tab="informacion">📖 Información</button>
-            <button class="btn-peri-tab" data-tab="simulacion">🎮 Simulación</button>
-        </nav>
+  <main class="contenedor">
+    <h1 class="titulo-principal"><i class="fas fa-sign-out-alt"></i> Periférico 2: Salida</h1>
+    <p class="desc-principal">
+      A diferencia de los dispositivos de entrada, los <strong>Periféricos de Salida</strong> reciben los datos procesados en lenguaje binario desde la CPU y los traducen a un formato comprensible para el ser humano.
+    </p>
 
-        <!-- Informacion -->
-        <div class="peri-panel-content activo" data-panel="informacion">
-            <h2>¿Qué es un Periférico de Salida?</h2>
-            <p>
-                Un <strong>periférico de salida</strong> es cualquier dispositivo que permite a la computadora 
-                <strong>mostrar o emitir información</strong> al usuario. El <strong>monitor</strong> es el periférico 
-                de salida más común.
-            </p>
-
-            <h3>¿Cómo funciona el monitor?</h3>
-            <div class="peri-pasos">
-                <div class="peri-paso">
-                    <div class="peri-numero">1</div>
-                    <p>La <strong>CPU</strong> genera los datos de salida</p>
-                </div>
-                <div class="peri-paso">
-                    <div class="peri-numero">2</div>
-                    <p>Los datos se envían a la <strong>tarjeta gráfica (GPU)</strong></p>
-                </div>
-                <div class="peri-paso">
-                    <div class="peri-numero">3</div>
-                    <p>La GPU convierte los datos en <strong>señales de video</strong></p>
-                </div>
-                <div class="peri-paso">
-                    <div class="peri-numero">4</div>
-                    <p>El monitor <strong>ilumina los píxeles</strong> para mostrar la imagen</p>
-                </div>
-            </div>
-
-            <h3 style="margin-top:25px;">📊 Conceptos Clave</h3>
-            <div class="flags-grid">
-                <div class="flag-item">
-                    <span class="letter">Px</span>
-                    <span class="name">Píxel</span>
-                    <span class="desc">Unidad mínima de imagen</span>
-                </div>
-                <div class="flag-item">
-                    <span class="letter">RGB</span>
-                    <span class="name">Rojo-Verde-Azul</span>
-                    <span class="desc">Modelo de color</span>
-                </div>
-                <div class="flag-item">
-                    <span class="letter">Hz</span>
-                    <span class="name">Hertz</span>
-                    <span class="desc">Frecuencia de refresco</span>
-                </div>
-                <div class="flag-item">
-                    <span class="letter">GPU</span>
-                    <span class="name">Tarjeta gráfica</span>
-                    <span class="desc">Procesa gráficos</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Simulacion -->
-        <div class="peri-panel-content" data-panel="simulacion">
-            <h2>🎮 Simulación del Monitor</h2>
-            <p>
-                La <strong>CPU</strong> está enviando instrucciones de video a la <strong>GPU</strong>, que las 
-                convierte en píxeles y los muestra en pantalla. Observa cómo se renderizan los gráficos en tiempo real.
-            </p>
-
-            <!-- Monitor= -->
-            <div class="peri-chip" id="periChip">
-                <div class="monitor-frame">
-                    <div class="monitor-screen">
-                        <canvas id="gameScreen" width="640" height="360"></canvas>
-                        <div class="monitor-scanline"></div>
-                        <div class="monitor-glow"></div>
-                    </div>
-                    <div class="monitor-stand">
-                        <div class="monitor-led" id="monitorLed"></div>
-                    </div>
-                </div>
-
-                <!-- Info de la GPU -->
-                <div class="io-row" style="margin-top:15px;">
-                    <div class="io-group">
-                        <h3> Modo</h3>
-                        <div class="peri-value" id="gpuMode" style="font-size:1rem;">—</div>
-                    </div>
-
-                    <div class="io-group">
-                        <h3>📊 FPS</h3>
-                        <div class="peri-value" id="gpuFps" style="font-size:1.2rem; color:#00ff88;">0</div>
-                    </div>
-
-                    <div class="io-group">
-                        <h3> Píxeles</h3>
-                        <div class="peri-value" id="gpuPixels" style="font-size:1rem;">0</div>
-                    </div>
-                </div>
-
-                <!-- Estado -->
-                <div class="status-bar">
-                    <div class="status-item">
-                        <span class="status-dot" id="statusDot"></span>
-                        <span id="statusText">Iniciando GPU...</span>
-                    </div>
-                </div>
-            </div>
-
-        <!-- Panel de Control -->
-        <div class="control-panel" style="margin-top:15px;">
-            <div class="control-group">
-                <label>Escena</label>
-                <select id="sceneSelect">
-                    <option value="space">🚀 Espacio</option>
-                    <option value="wave">🌊 Onda</option>
-                </select>
-            </div>
-
-            <div class="control-group">
-                <label>Velocidad: <span id="speedValue">5</span></label>
-                <input type="range" id="speedRange" min="1" max="10" value="5">
-            </div>
-
-            <button class="btn-execute" id="pauseBtn">⏸️ Pausar</button>
-            <button class="btn-execute btn-clear" id="resetBtn">🔄 Reiniciar</button>
-        </div>
-
-        <!-- panel de video -->
-        <div class="peri-panel-content" data-panel="videos">
-            <h2>🎬 Videos Educativos</h2>
-            <p>Aprende más sobre los periféricos de salida con estos recursos visuales.</p>
-
-            <div class="videos-grid">
-                <div class="video-card">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/1I5ZMmrOfnA" allowfullscreen></iframe>
-                    </div>
-                    <div class="video-info">
-                        <h4>¿Cómo funciona un monitor?</h4>
-                        <p>Tipos y tecnologías de pantallas</p>
-                    </div>
-                </div>
-
-                <div class="video-card">
-                    <div class="video-wrapper">
-                        <iframe src="https://www.youtube.com/embed/QZwneRb-zqA" allowfullscreen></iframe>
-                    </div>
-                    <div class="video-info">
-                        <h4>Del bit al píxel</h4>
-                        <p>Cómo se forman las imágenes</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+    <!-- Teoría -->
+    <div class="salida-grid">
+      <div class="dispositivo-card">
+        <h3><i class="fas fa-desktop"></i> Monitor</h3>
+        <p>Recibe señales de video (datos renderizados por la GPU) y altera los píxeles de la pantalla para mostrar interfaces gráficas y modelado 3D.</p>
+      </div>
+      <div class="dispositivo-card">
+        <h3><i class="fas fa-volume-up"></i> Altavoz / Auricular</h3>
+        <p>Un conversor digital-analógico (DAC) transforma los datos binarios en ondas eléctricas que generan vibraciones de sonido en el aire.</p>
+      </div>
+      <div class="dispositivo-card">
+        <h3><i class="fas fa-print"></i> Impresora</h3>
+        <p>Interpreta lenguajes de descripción de páginas enviados por la Unidad de E/S y plasma físicamente documentos utilizando tinta o láser térmico.</p>
+      </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="../js/biografia.js"></script>
-    <script src="../js/nosotros.js"></script>
-    <script src="../js/periferico2.js"></script>
+    <!-- Simulador -->
+    <section class="simulador-panel">
+      <h2><i class="fas fa-server"></i> Simulador: Envío de Datos de Salida</h2>
+      
+      <div class="simulador-layout">
+        <div class="comando-cpu">
+          <h4><i class="fas fa-microchip"></i> Instrucciones de CPU</h4>
+          <!-- BOTÓN ACTUALIZADO PARA LOS GRÁFICOS 3D -->
+          <button class="btn-comando" id="btn-monitor">Renderizar Gráficos 3D <i class="fas fa-arrow-right"></i></button>
+          <button class="btn-comando" id="btn-audio" style="border-color: #ff00ff; color: #ff00ff;">Emitir Frecuencia <i class="fas fa-arrow-right"></i></button>
+          <button class="btn-comando" id="btn-print" style="border-color: #00ff00; color: #00ff00;">Generar Documento <i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <div class="zona-salida">
+          <div class="salida-box" id="box-monitor">
+            <i class="fas fa-desktop salida-icono"></i>
+            <div class="salida-pantalla" id="screen-text">Esperando señal de video...</div>
+          </div>
+          <div class="salida-box" id="box-audio">
+            <i class="fas fa-volume-up salida-icono"></i>
+            <div class="salida-pantalla" id="audio-text">Sin señal de audio</div>
+          </div>
+          <div class="salida-box" id="box-print">
+            <i class="fas fa-print salida-icono"></i>
+            <div class="salida-pantalla">
+              <div id="print-paper" style="opacity: 0;">Reporte_Final.pdf</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NUEVO: VENTANA EMERGENTE (MINI MONITOR) -->
+    <div id="mini-monitor-modal" class="modal-oculto">
+      <div class="monitor-marco">
+        <button id="cerrar-monitor"><i class="fas fa-times"></i></button>
+        <div class="monitor-pantalla-interna">
+          <!-- Estadísticas (OSD) -->
+          <div class="monitor-stats">
+            <p><i class="fas fa-microchip"></i> API: <span style="color: #fff;">DirectX 12 / GPU</span></p>
+            <p><i class="fas fa-sync-alt"></i> Refresco: <span style="color: #fff;">144 Hz</span></p>
+            <p><i class="fas fa-tachometer-alt"></i> FPS: <span id="fps-counter" style="color: #00ff00; font-weight: bold;">0</span></p>
+          </div>
+          <!-- Animación de Renderizado -->
+          <div class="graficos-animacion">
+            <div class="cubo-3d"></div>
+            <div class="scanline"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="../js/biografia.js"></script>
+  <script src="../js/nosotros.js"></script>
+
+  <!-- LÓGICA DEL SIMULADOR -->
+  <script>
+    // ==========================================
+    // 1. LÓGICA DEL MONITOR
+    // ==========================================
+    const btnMonitor = document.getElementById('btn-monitor');
+    const boxMonitor = document.getElementById('box-monitor'); 
+    const screenText = document.getElementById('screen-text');
+    const modalMonitor = document.getElementById('mini-monitor-modal'); 
+    const btnCerrar = document.getElementById('cerrar-monitor');
+    const fpsCounter = document.getElementById('fps-counter');
+    let intervaloFPS; // Guarda el ciclo de los FPS para poder detenerlo luego
+
+    // Al presionar el botón "Renderizar Gráficos 3D" en la CPU
+    btnMonitor.addEventListener('click', () => {
+      boxMonitor.classList.add('active-monitor');
+      screenText.textContent = "> RECIBIENDO DATOS 3D...";
+      
+      // Muestra la ventana modal cambiando la clase CSS
+      modalMonitor.classList.remove('modal-oculto');
+      modalMonitor.classList.add('modal-visible');
+      
+      // Simulador de FPS: Actualiza el número matemático cada 150ms
+      // Genera un número aleatorio entre 135 y 144 para simular un monitor de 144Hz
+      intervaloFPS = setInterval(() => {
+        const fpsAleatorio = Math.floor(Math.random() * (144 - 135 + 1)) + 135;
+        fpsCounter.textContent = fpsAleatorio;
+      }, 150); 
+    });
+
+    // Función para CERRAR el mini monitor
+    btnCerrar.addEventListener('click', () => {
+      // Oculta la ventana
+      modalMonitor.classList.remove('modal-visible');
+      modalMonitor.classList.add('modal-oculto');
+      
+      // Apaga los indicadores visuales y detiene el contador de FPS
+      boxMonitor.classList.remove('active-monitor');
+      screenText.textContent = "Esperando señal de video...";
+      clearInterval(intervaloFPS); 
+    });
+
+    // ==========================================
+    // 2. LÓGICA DEL AUDIO (WEB AUDIO API)
+    // ==========================================
+    const btnAudio = document.getElementById('btn-audio');
+    const boxAudio = document.getElementById('box-audio');
+    const audioText = document.getElementById('audio-text');
+    let audioCtx = null;
+
+    btnAudio.addEventListener('click', () => {
+      boxAudio.classList.add('active-audio');
+      audioText.textContent = "Reproduciendo: Tono_Sistema.wav (880Hz)";
+      
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+      
+      oscillator.type = 'square'; 
+      oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); 
+      gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); 
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      oscillator.start(); 
+      oscillator.stop(audioCtx.currentTime + 0.3);
+
+      setTimeout(() => {
+        boxAudio.classList.remove('active-audio');
+        audioText.textContent = "Sin señal de audio";
+      }, 1000);
+    });
+
+    // ==========================================
+    // 3. LÓGICA DE LA IMPRESORA (ANIMACIÓN CSS)
+    // ==========================================
+    const btnPrint = document.getElementById('btn-print');
+    const boxPrint = document.getElementById('box-print');
+    const printPaper = document.getElementById('print-paper');
+
+    btnPrint.addEventListener('click', () => {
+      boxPrint.classList.add('active-print');
+      
+      printPaper.classList.remove('papel');
+      void printPaper.offsetWidth; 
+      printPaper.classList.add('papel');
+      printPaper.style.opacity = "1";
+
+      setTimeout(() => {
+        boxPrint.classList.remove('active-print');
+        printPaper.classList.remove('papel');
+        printPaper.style.opacity = "0";
+      }, 3000);
+    });
+  </script>
 </body>
 </html>
