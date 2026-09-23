@@ -1,3 +1,4 @@
+<!-- Kevin Rodrigo López Espinoza 9959-24-3309 UC y Traduccion de segundo nivel-->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -147,7 +148,7 @@
 
     <!-- MÓDULO DE SIMULACIÓN UC & MMU (VIRTUALIZACIÓN DE MEMORIA) -->
 <section class="seccion-uc simulador-mmu-container">
-  <h2>🎮 Simulador: UC $\rightarrow$ MMU $\rightarrow$ RAM / Swap</h2>
+  <h2>🎮 Simulador: UC MMU RAM / Swap</h2>
   
   <div class="panel-simulador">
     <!-- Panel Izquierdo: Unidad de Control (UC) -->
@@ -205,6 +206,73 @@
     <button id="btn-paso-mmu" class="btn-simular accion">▶ Tratar Dirección (MMU)</button>
     <button id="btn-forzar-swap" class="btn-simular alerta">⚠️ Forzar Error (Page Fault / Swap)</button>
   </div>
+
+  <!-- ESQUEMA MMU ACTUALIZACION -->
+<div class="diagrama-cuaderno-card">
+  <h4 class="cuaderno-titulo">Traducción de Dos Niveles (MMU)</h4>
+  
+  <!-- 1. Dirección Lógica -->
+  <div class="cuaderno-seccion">
+    <span class="cuaderno-label">1) Dir. Lógica:</span>
+    <div class="registro-logico">
+      <div class="celda-reg seg"><span>CS/DS</span><small>(2b)</small></div>
+      <div class="celda-reg p1"><span>101</span><small>P1 (5b)</small></div>
+      <div class="celda-reg p2"><span>11</span><small>P2 (3b)</small></div>
+      <div class="celda-reg offset"><span>11000111</span><small>Offset (Byte)</small></div>
+    </div>
+  </div>
+
+  <!-- Desglose de bits -->
+  <div class="desglose-bits">
+    <div>Primer nivel  <strong>5 bits</strong></div>
+    <div>Segundo nivel <strong>3 bits</strong></div>
+    <div>Segmentos <strong>2 bits (Se eligen Punteros o Registros)</strong></div>
+  </div>
+
+  <!-- 2. Tablas y Punteros -->
+  <div class="grid-tablas-cuaderno">
+    <!-- Tabla Nivel 1 (Directorio) -->
+    <div class="tabla-bloque">
+      <span class="tabla-tag">Directorio (Nivel 1)</span>
+      <div class="tabla-mmu">
+        <div class="row-mmu"><span class="idx">0</span><span>1012</span></div>
+        <div class="row-mmu"><span class="idx">1</span><span>8B130</span></div>
+        <div class="row-mmu"><span class="idx">2</span><span>CA11</span></div>
+        <div class="row-mmu active-p1"><span class="idx">5</span><span>BC11 ➔</span></div>
+        <div class="row-mmu"><span class="idx">6</span><span>DF04</span></div>
+      </div>
+    </div>
+
+    <div class="flecha-intermedia">➔</div>
+
+    <!-- Tabla Nivel 2 (Páginas) -->
+    <div class="tabla-bloque">
+      <span class="tabla-tag">Tabla de Páginas (Nivel 2)</span>
+      <div class="tabla-mmu">
+        <div class="row-mmu"><span class="idx">0</span><span>1 B 001</span></div>
+        <div class="row-mmu"><span class="idx">1</span><span>1 C D2</span></div>
+        <div class="row-mmu active-p2"><span class="idx">3</span><span>1 BC 11 ➔</span></div>
+        <div class="row-mmu"><span class="idx">4</span><span>0 BC 14</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Dirección Exacta Final y RAM -->
+  <div class="resultado-fisico-container">
+    <span class="cuaderno-label">Dirección Exacta (RAM):</span>
+    <div class="registro-fisico">
+      <span class="marco-hex">BC11</span>
+      <span class="offset-bin">11000111</span>
+    </div>
+    
+    <!-- Representación de la celda en RAM -->
+    <div class="ram-grid-mini">
+      <div class="ram-cell"></div><div class="ram-cell"></div><div class="ram-cell"></div>
+      <div class="ram-cell active-byte" title="Byte Exacto">11</div><div class="ram-cell"></div>
+      <div class="ram-cell"></div><div class="ram-cell"></div><div class="ram-cell"></div>
+    </div>
+  </div>
+</div>
 </section>
 
     <!-- FUENTES -->
